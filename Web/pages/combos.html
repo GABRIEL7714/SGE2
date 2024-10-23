@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Combos Disponibles</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="d-flex flex-column min-vh-100">
+    <header id="header"></header>
+
+    <main class="flex-grow-1">
+      <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid d-flex justify-content-center">
+          <span class="navbar-brand mb-0 h1" id="eventTitle">Evento</span>
+        </div>
+      </nav>
+
+      <div class="container mt-4">
+        <div class="row text-center" id="combosContainer">
+          <!-- Combos se cargarán aquí dinámicamente -->
+        </div>
+        <div class="text-center mt-4">
+          <button class="btn btn-primary" id="inscribirButton">
+            Inscribirse
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- Contenido Principal -->
+    <footer id="footer"></footer>
+
+    <script src="/Web/backend/user-menu.js"></script>
+    <script src="../backend/combos.js"></script>
+  </body>
+</html>
