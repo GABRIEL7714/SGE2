@@ -27,29 +27,29 @@
     <script>
       // Función para cargar el header
       function loadHeader() {
-        fetch("/Web/includes/header.html")
+        fetch('/Web/includes/header.html')
           .then((response) => response.text())
           .then((data) => {
-            document.getElementById("header").innerHTML = data;
+            document.getElementById('header').innerHTML = data;
           });
       }
 
       // Función para cargar el footer
       function loadFooter() {
-        fetch("Web/includes/footer.html")
+        fetch('Web/includes/footer.html')
           .then((response) => response.text())
           .then((data) => {
-            document.getElementById("footer").innerHTML = data;
+            document.getElementById('footer').innerHTML = data;
           });
       }
 
       // Llamando a las funciones para cargar el contenido
-      loadHeader();
-      loadFooter();
+      // loadHeader();
+      // loadFooter();
     </script>
-    <script src="/Web/backend/user-menu.js"></script>
+    <script src="../backend/user-menu.js"></script>
 
-    <script src="/Web/backend/events.js"></script>
+    <script src="../backend//events.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
