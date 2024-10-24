@@ -20,33 +20,8 @@
       </div>
     </main>
 
-    <!-- Aquí cargaremos el footer -->
     <footer id="footer"></footer>
 
-    <!-- JavaScript para cargar los archivos del header y footer -->
-    <script>
-      // Función para cargar el header
-      function loadHeader() {
-        fetch('/Web/includes/header.html')
-          .then((response) => response.text())
-          .then((data) => {
-            document.getElementById('header').innerHTML = data;
-          });
-      }
-
-      // Función para cargar el footer
-      function loadFooter() {
-        fetch('Web/includes/footer.html')
-          .then((response) => response.text())
-          .then((data) => {
-            document.getElementById('footer').innerHTML = data;
-          });
-      }
-
-      // Llamando a las funciones para cargar el contenido
-      // loadHeader();
-      // loadFooter();
-    </script>
     <script src="../backend/user-menu.js"></script>
 
     <script src="../backend//events.js"></script>
