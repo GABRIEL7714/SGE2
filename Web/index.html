@@ -71,11 +71,10 @@
         fetch(filePath)
           .then((response) => response.text())
           .then((data) => {
-            console.log('SETTING DATA');
             document.getElementById(elementId).innerHTML = data;
           })
           .catch((error) => {
-            console.error('Error al cargar el archivo ---------------:', error);
+            console.error('Error al cargar el archivo', error);
           });
       }
 
