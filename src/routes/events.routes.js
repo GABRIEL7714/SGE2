@@ -6,6 +6,6 @@ import { getAllEvents } from '../controllers/events.controller.js';
 const router = Router();
 
 //Defino nombres de las rutas,
-router.put('/getAllEvents', getAllEvents);
+router.get('/getAllEvents', getAllEvents);
 
 export default router;
