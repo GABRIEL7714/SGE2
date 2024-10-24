@@ -1,8 +1,8 @@
-import { events, users } from '../mockdb/mockdb.js';
+import { events, users } from "../mockdb/mockdb.js";
 
 //Genero recibo del evento
 const createInvoice = async () => {
-  const message = 'Se ha enviado el comprobante electronico a su correo';
+  const message = "Se ha enviado el comprobante electronico a su correo";
   return message;
 };
 
@@ -24,11 +24,11 @@ export const registerToEvent = async (req, res) => {
   const invoiceMessage = await createInvoice();
 
   const message =
-    'Usted ha sigo registrado para el evento: ' +
+    "Usted ha sigo registrado para el evento: " +
     event.eventName +
-    ' --- ' +
+    " --- " +
     user.email +
-    '---->' +
+    "---->" +
     invoiceMessage;
 
   return res.json(message);
@@ -37,6 +37,6 @@ export const registerToEvent = async (req, res) => {
 //* Gabo de esta forma envias por el cuerpo (body)
 // en insomnia pones primero pones POST y luego entre llaves { email: " de email", password: "de password"}
 export const envioBody = async (req, res) => {
-  const { email, pass } = req.body;
+  const { email, password } = req.body;
   return res.json(email);
 };
