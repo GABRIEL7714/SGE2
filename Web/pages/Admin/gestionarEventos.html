@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tus eventos</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .header {
+        background-color: #6c757d;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        font-size: 1.5rem;
+      }
+
+      .table td,
+      .table th {
+        text-align: center;
+        vertical-align: middle;
+      }
+
+      .btn-editar {
+        background-color: #d1e7dd;
+        border: none;
+        padding: 5px 10px;
+        color: black;
+        cursor: pointer;
+      }
+
+      .btn-nuevo-evento {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        display: block;
+        margin: 20px auto;
+      }
+    </style>
+  </head>
+  <body class="d-flex flex-column min-vh-100">
+    <header id="header"></header>
+    <main class="flex-grow-1">
+      <div class="header">Tus eventos:</div>
+
+      <div class="container mt-5">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Inicio</th>
+              <th>Fin</th>
+              <th>Actividades</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="event-table-body">
+            <!-- Aquí se agregarán dinámicamente las filas de eventos -->
+          </tbody>
+        </table>
+
+        <button class="btn-nuevo-evento" onclick="crearEvento()">
+          Crear nuevo evento
+        </button>
+      </div>
+    </main>
+
+    <script>
+      // Simulando datos de eventos
+      const eventos = [
+        {
+          nombre: "Evento 1",
+          tipo: "Congreso",
+          inicio: "2024-02-05",
+          fin: "2024-12-05",
+          actividades: 2,
+        },
+        {
+          nombre: "Evento 2",
+          tipo: "Taller",
+          inicio: "2025-07-10",
+          fin: "2025-08-10",
+          actividades: 3,
+        },
+        {
+          nombre: "Evento 3",
+          tipo: "Congreso",
+          inicio: "2024-02-05",
+          fin: "2024-12-05",
+          actividades: "NO",
+        },
+        {
+          nombre: "Evento 4",
+          tipo: "Congreso",
+          inicio: "2024-02-05",
+          fin: "2024-12-05",
+          actividades: 2,
+        },
+        {
+          nombre: "Evento 5",
+          tipo: "Congreso",
+          inicio: "2024-02-05",
+          fin: "2024-12-05",
+          actividades: "NO",
+        },
+        {
+          nombre: "Evento 2",
+          tipo: "Taller",
+          inicio: "2025-07-10",
+          fin: "2025-08-10",
+          actividades: 3,
+        },
+        {
+          nombre: "Evento 2",
+          tipo: "Taller",
+          inicio: "2025-07-10",
+          fin: "2025-08-10",
+          actividades: 3,
+        },
+        {
+          nombre: "Evento 2",
+          tipo: "Taller",
+          inicio: "2025-07-10",
+          fin: "2025-08-10",
+          actividades: 3,
+        },
+        {
+          nombre: "Evento 2",
+          tipo: "Taller",
+          inicio: "2025-07-10",
+          fin: "2025-08-10",
+          actividades: 3,
+        },
+        {
+          nombre: "Evento 2",
+          tipo: "Taller",
+          inicio: "2025-07-10",
+          fin: "2025-08-10",
+          actividades: 3,
+        },
+        {
+          nombre: "Evento 2",
+          tipo: "Taller",
+          inicio: "2025-07-10",
+          fin: "2025-08-10",
+          actividades: 3,
+        },
+        {
+          nombre: "Evento 2",
+          tipo: "Taller",
+          inicio: "2025-07-10",
+          fin: "2025-08-10",
+          actividades: 3,
+        },
+        {
+          nombre: "Evento 2",
+          tipo: "Taller",
+          inicio: "2025-07-10",
+          fin: "2025-08-10",
+          actividades: 3,
+        },
+        {
+          nombre: "Evento 2",
+          tipo: "Taller",
+          inicio: "2025-07-10",
+          fin: "2025-08-10",
+          actividades: 3,
+        },
+        {
+          nombre: "Evento 2",
+          tipo: "Taller",
+          inicio: "2025-07-10",
+          fin: "2025-08-10",
+          actividades: 3,
+        },
+        {
+          nombre: "Evento 2",
+          tipo: "Taller",
+          inicio: "2025-07-10",
+          fin: "2025-08-10",
+          actividades: 3,
+        },
+      ];
+
+      // Función para cargar los eventos en la tabla
+      function cargarEventos() {
+        const tableBody = document.getElementById("event-table-body");
+        tableBody.innerHTML = ""; // Limpiar el contenido existente
+
+        eventos.forEach((evento) => {
+          const row = document.createElement("tr");
+
+          row.innerHTML = `
+                    <td>${evento.nombre}</td>
+                    <td>${evento.tipo}</td>
+                    <td>${evento.inicio}</td>
+                    <td>${evento.fin}</td>
+                    <td style="background-color: ${
+                      evento.actividades === "NO" ? "#f8d7da" : "#d4edda"
+                    }">
+                        ${evento.actividades}
+                    </td>
+                    <td><button class="btn-editar" onclick="editarEvento('${
+                      evento.nombre
+                    }')">Editar</button></td>
+                `;
+
+          tableBody.appendChild(row);
+        });
+      }
+
+      // Función para simular la edición de un evento
+      function editarEvento(nombre) {
+        alert(`Editar evento: ${nombre}`);
+      }
+
+      // Función para simular la creación de un nuevo evento
+      function crearEvento() {
+        alert("Crear nuevo evento");
+      }
+
+      // Cargar los eventos al cargar la página
+      window.onload = cargarEventos;
+    </script>
+    <footer id="footer"></footer>
+
+    <script src="/Web/backend/user-menu.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
