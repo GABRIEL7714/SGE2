@@ -1,8 +1,8 @@
-async function getEvents() {
-  const API_URL = 'http://localhost:5000/getAllEvents';
+import { URL_GET_EVENTS } from '/Web/utils/constants';
 
+async function getEvents() {
   try {
-    const response = await fetch(API_URL);
+    const response = await fetch(URL_GET_EVENTS);
     if (!response.ok) {
       throw new Error('Error en la solicitud: ' + response.status);
     }
@@ -17,7 +17,6 @@ async function getEvents() {
 document.addEventListener('DOMContentLoaded', async function () {
   try {
     const events = await getEvents(); // Espera a que getEvents devuelva los datos
-    console.log('Eventos recibidos:', events);
     const eventContainer = document.getElementById('eventContainer');
 
     events.forEach((event) => {
