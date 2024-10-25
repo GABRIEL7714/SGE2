@@ -1,50 +1,48 @@
-/* Librerias propias de Node */
-import express from 'express';
-import cors from 'cors';
+import express from "express";
+import path from "path";
+import cors from "cors";
+import setTZ from "set-tz";
 
-/* Fin Librerias propias de Node */
-import setTZ from 'set-tz';
-
-//Seteando la configuracion de zona horaria
-setTZ('America/Lima');
-
-/* Importando las rutas creadas */
-import usersRoutes from './routes/users.routes.js';
-// import inscriptionsRoutes from './routes/inscriptions.routes.js';
-import logInRoutes from './routes/logIn.routes.js';
-import eventsRoutes from './routes/events.routes.js';
-
-/* Fin Importando rutas creadas */
+// Setear la zona horaria
+setTZ("America/Lima");
 
 const app = express();
 
+// Configurar cors y json
 app.use(cors());
-//Paso esta funcion para que express entienda cuando se le envia un Json, limit sirve para evitar el error too large (413)
-app.use(express.json({ limit: '50mb' }));
+app.use(express.json({ limit: "50mb" }));
 
-/* *********** MUY IMPORTANTE DEFINIRLO ANTES DE LLAMAR A LAS RUTAS PARA HABILITAR EL CORS */
+// ********* NUEVO CÓDIGO PARA SERVIR ARCHIVOS ESTÁTICOS Y index.html **********
+
+// Servir archivos estáticos desde la carpeta 'Web'
+const __dirname = path.resolve(); // Obtener el directorio raíz
+app.use(express.static(path.join(__dirname, "Web")));
+
+// Ruta para servir index.html
+
+// ********* FIN DEL NUEVO CÓDIGO **********
+
+// Habilitar CORS antes de las rutas
 app.use(function (req, res, next) {
-  // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  // Request methods you wish to allow
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
-    'Access-Control-Allow-Methods',
-    'GET, POST, OPTIONS, PUT, PATCH, DELETE'
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
   );
-  // Request headers you wish to allow
   res.setHeader(
-    'Access-Control-Allow-Headers',
-    'X-Requested-With,content-type'
+    "Access-Control-Allow-Headers",
+    "X-Requested-With,content-type"
   );
-  // Set to true if you need the website to include cookies in the requests sent
-  // to the API (e.g. in case you use sessions)
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  // Pass to next layer of middleware
+  res.setHeader("Access-Control-Allow-Credentials", true);
   next();
 });
-app.set('Access-Control-Allow-Origin', '*');
 
-/*  Se le indica al servidor que quiero utilizar  todas las rutas que contiene el archivo */
+// Rutas de la API
+import usersRoutes from "./routes/users.routes.js";
+// import inscriptionsRoutes from './routes/inscriptions.routes.js';
+import logInRoutes from "./routes/logIn.routes.js";
+import eventsRoutes from "./routes/events.routes.js";
+
 app.use(usersRoutes);
 // app.use(inscriptionsRoutes);
 app.use(logInRoutes);

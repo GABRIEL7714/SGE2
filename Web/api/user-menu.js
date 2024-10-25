@@ -1,12 +1,10 @@
 // Función para cargar el header y luego ejecutar renderUserMenu
 function loadHeaderAndUserMenu() {
-  fetch("/Web/includes/header.html")
+  fetch("/includes/header.html")
     .then((response) => response.text())
     .then((data) => {
-      // Inserta el header cargado en el DOM
+      console.log("Header cargado correctamente");
       document.getElementById("header").innerHTML = data;
-
-      // Ahora que el header está cargado, renderiza el menú de usuario
       renderUserMenu();
     })
     .catch((error) => {
@@ -16,7 +14,7 @@ function loadHeaderAndUserMenu() {
 
 // Función para cargar el footer
 function loadFooter() {
-  fetch("/Web/includes/footer.html")
+  fetch("/includes/footer.html")
     .then((response) => response.text())
     .then((data) => {
       document.getElementById("footer").innerHTML = data;
@@ -41,11 +39,11 @@ function renderUserMenu() {
   }
 
   let loggedIn = localStorage.getItem("loggedIn") === "true";
-  let roles = JSON.parse(localStorage.getItem("roles")) || []; // Cargar roles desde localStorage
-  let currentRole = localStorage.getItem("currentRole") || roles[0]; // Si no hay currentRole, usar el primer rol
+  let rol = JSON.parse(localStorage.getItem("rol")) || []; // Cargar rol desde localStorage
+  let currentRole = localStorage.getItem("currentRole") || rol; // Si no hay currentRole, usar el primer rol
 
   console.log("Estado de loggedIn es: ", loggedIn);
-  console.log("Roles disponibles: ", roles);
+  console.log("rol disponibles: ", rol);
   console.log("Rol actual: ", currentRole);
 
   if (loggedIn) {
@@ -57,8 +55,8 @@ function renderUserMenu() {
                 <div class="dropdown-menu" aria-labelledby="roleDropdown">
         `;
 
-    // Añadir todos los roles al dropdown
-    roles.forEach((role) => {
+    // Añadir todos los rol al dropdown
+    rol.forEach((role) => {
       // Resaltar el rol actual en el menú desplegable
       let activeClass = role === currentRole ? "active" : "";
       menuHtml += `<a class="dropdown-item ${activeClass}" href="#" onclick="changeRole('${role}')">${role}</a>`;
@@ -74,7 +72,7 @@ function renderUserMenu() {
 
     userMenu.innerHTML = menuHtml;
   } else {
-    userMenu.innerHTML = `<a href="/Web/pages/logIn.html" class="btn btn-outline-primary">Iniciar Sesión</a>`;
+    userMenu.innerHTML = `<a href="/logIn" class="btn btn-outline-primary">Iniciar Sesión</a>`;
   }
 }
 
@@ -87,7 +85,7 @@ function changeRole(role) {
 // Función para cerrar sesión
 function logout() {
   localStorage.setItem("loggedIn", "false");
-  localStorage.removeItem("roles");
+  localStorage.removeItem("rol");
   localStorage.removeItem("currentRole");
   renderUserMenu();
 }
