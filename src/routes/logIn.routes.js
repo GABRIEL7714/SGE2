@@ -6,5 +6,5 @@ import { logIn } from "../controllers/logIn.controller.js";
 const router = Router();
 
 //Defino nombres de las rutas,
-router.post("/logIn", logIn);
+router.post("/api/logIn", logIn);
 export default router;

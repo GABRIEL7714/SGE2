@@ -36,6 +36,3 @@ app.get("/indexAdmin", (req, res) => {
     path.join(__dirname, "..", "Web", "pages", "Admin", "indexAdmin.html")
   );
 });
-
-// Ruta para iniciar sesión (API)
-app.post("/api/logIn", logIn);
