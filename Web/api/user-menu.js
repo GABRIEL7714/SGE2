@@ -52,7 +52,15 @@ function renderUserMenu() {
   console.log("Estado de loggedIn es:", loggedIn);
   console.log("Rol actual:", rol);
 
+  // Selecciona el enlace por su ID
+  const sgeLink = document.getElementById("SGE-link");
+
+  // Si el usuario está logueado, cambia el href del enlace
   if (loggedIn) {
+    if (rol != "usuario") sgeLink.href = "/indexAdmin";
+    else sgeLink.href = "/";
+
+    // También puedes agregar el menú como antes
     let menuHtml = `
       <div class="d-flex align-items-center">
         <div class="role-display bg-light rounded p-2 mr-3" style="border: 1px solid #ddd;">

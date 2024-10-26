@@ -40,6 +40,16 @@
         display: block;
         margin: 20px auto;
       }
+
+      .btn-volver {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        display: block;
+        margin: 20px auto;
+      }
     </style>
   </head>
   <body class="d-flex flex-column min-vh-100">
@@ -69,6 +79,14 @@
           onclick="window.location.href='/CrearEvento';"
         >
           Crear nuevo evento
+        </button>
+
+        <!-- Botón para volver -->
+        <button
+          class="btn-volver"
+          onclick="window.location.href='/indexAdmin';"
+        >
+          Volver
         </button>
       </div>
     </main>

@@ -97,3 +97,21 @@ app.get("/ActividadesEvento", (req, res) => {
     )
   );
 });
+
+app.get("/EditarEvento", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "..", "Web", "pages", "Admin", "editarEvento.html")
+  );
+});
+
+app.get("/GestionarRoles", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "..", "Web", "pages", "Admin", "gestionRoles.html")
+  );
+});
+
+app.get("/DesignarRol", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "..", "Web", "pages", "Admin", "designarRol.html")
+  );
+});

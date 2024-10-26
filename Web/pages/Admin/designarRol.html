@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Designar Encargado/Colaborador</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .header {
+        background-color: #d3d3d3;
+        padding: 10px;
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+      .footer {
+        background-color: #f1f1f1;
+        padding: 10px;
+        text-align: center;
+      }
+      .container {
+        max-width: 600px;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body class="d-flex flex-column min-vh-100">
+    <!-- Header -->
+    <header id="header"></header>
+
+    <!-- Main Content -->
+    <main class="flex-grow-1">
+      <div class="header">Designar Encargado/Colaborador</div>
+      <div class="container text-center">
+        <label for="documento" class="form-label"
+          >Ingresa el N° de documento de la persona</label
+        >
+        <div class="input-group mb-3">
+          <input
+            type="text"
+            id="documento"
+            class="form-control"
+            placeholder="N° de Documento"
+          />
+          <button class="btn btn-success" onclick="buscarPersona()">
+            Buscar
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer"></footer>
+
+    <!-- Modal para "Se encontró a la persona" -->
+    <div
+      class="modal fade"
+      id="personaEncontradaModal"
+      tabindex="-1"
+      aria-labelledby="personaEncontradaLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="personaEncontradaLabel">
+              Se encontró a la persona
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p id="nombrePersona">Juan Rivero Martinez</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <button type="button" class="btn btn-primary">Designar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal para "No se encontró a la persona" -->
+    <div
+      class="modal fade"
+      id="personaNoEncontradaModal"
+      tabindex="-1"
+      aria-labelledby="personaNoEncontradaLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="personaNoEncontradaLabel">
+              No se encontró a la persona
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>Este N° de documento no está registrado</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+            >
+              Ok
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/api/user-menu.js"></script>
+    <script src="/api/designarRol.js"></script>
+  </body>
+</html>

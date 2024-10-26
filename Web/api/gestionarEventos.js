@@ -52,9 +52,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         numberOfActivities === 0 ? "btn-danger" : "btn-success"
       }">${numberOfActivities} actividades</a>
         </td>
-        <td><button class="btn btn-primary btn-sm" onclick="editarEvento('${
-          evento.nombre
-        }')">Editar</button></td>
+        <td><button class="btn btn-primary btn-sm" onclick="editarEvento('${idEvento}')">Editar</button></td>
       `;
 
       tableBody.appendChild(row);
@@ -63,3 +61,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     console.error("Error al manejar los eventos:", error);
   }
 });
+
+function editarEvento(idEvento) {
+  window.location.href = `/EditarEvento?id=${idEvento}`;
+}
