@@ -40,3 +40,9 @@ app.get("/indexAdmin", (req, res) => {
 app.get("/Register", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "Web", "pages", "singUp.html"));
 });
+
+app.get("/Combos", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "..", "Web", "pages", "User", "combos.html")
+  );
+});

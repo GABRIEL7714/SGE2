@@ -1,7 +1,9 @@
 // when page is loaded
 document.addEventListener("DOMContentLoaded", async function () {
   try {
-    const events = await fetch("/getAllEvents"); // Espera a que getEvents devuelva los datos
+    const response = await fetch("/getAllEvents");
+    const events = await response.json();
+
     const eventContainer = document.getElementById("eventContainer");
 
     console.log(events);
@@ -12,15 +14,16 @@ document.addEventListener("DOMContentLoaded", async function () {
       eventCard.classList.add("col-md-4", "mb-4");
 
       eventCard.innerHTML = `
-           <div class="card h-100">
-                <img src="${event.img}" class="card-img-top" alt="${event.nombre}">
-                <div class="card-body text-center">
-                    <h5 class="card-title">${event.descripcion}</h5>
-                    <p class="card-text">${event.fechainicio}</p>
-                    <button class="btn btn-success" onclick="verCombos('${event.nombre}', '${event.fechainscripcion}')">Ver Combos</button>
-                </div>
-            </div>
-        `;
+      <div class="card h-100">
+        <div class="card-img-top d-flex align-items-center justify-content-center" style="background-color: #e0e0e0; height: 200px;">
+        </div>
+        <div class="card-body text-center">
+          <h5 class="card-title">${event.descripcion}</h5>
+          <p class="card-text">${event.fechainicio}</p>
+          <button class="btn btn-success" onclick="verCombos('${event.nombre}', '${event.fechainscripcion}')">Ver Combos</button>
+        </div>
+      </div>
+    `;
 
       eventContainer.appendChild(eventCard);
     });
@@ -32,7 +35,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 // Función para redirigir a la página de combos con la información del evento seleccionado
 function verCombos(eventTitle, fechaInscripcion) {
   // Redirigir a combos.html pasando la información del evento como parámetros en la URL
-  window.location.href = `combos.html?title=${encodeURIComponent(
+  window.location.href = `/Combos?title=${encodeURIComponent(
     eventTitle
   )}&fechaInscripcion=${encodeURIComponent(fechaInscripcion)}`;
 }
