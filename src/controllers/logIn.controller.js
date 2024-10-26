@@ -13,7 +13,7 @@ export const logIn = async (req, res) => {
     if (result.rows.length > 0) {
       const rol = result.rows[0].rol;
 
-      res.cookie("rol", "administrador", {
+      res.cookie("rol", rol, {
         secure: false, // Cambia a true si usas HTTPS
         sameSite: "Lax",
         maxAge: 3600000, // Tiempo en milisegundos

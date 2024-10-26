@@ -36,3 +36,7 @@ app.get("/indexAdmin", (req, res) => {
     path.join(__dirname, "..", "Web", "pages", "Admin", "indexAdmin.html")
   );
 });
+
+app.get("/Register", (req, res) => {
+  res.sendFile(path.join(__dirname, "..", "Web", "pages", "singUp.html"));
+});
