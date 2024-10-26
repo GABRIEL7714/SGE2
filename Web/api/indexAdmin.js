@@ -21,23 +21,23 @@ function configureButtons(role) {
 // Script en indexAdmin o EventsUser para leer la cookie y almacenar en localStorage
 document.addEventListener("DOMContentLoaded", () => {
   // Función para leer la cookie por nombre
-  console.log("Si cargado");
   function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop().split(";").shift();
   }
 
-  // Leer la cookie "rol" y almacenar en localStorage
-  const role = getCookie("rol");
-  if (role) {
-    localStorage.setItem("rol", role);
-  }
-  const loggedIn = getCookie("loggedIn");
-  console.log(loggedIn);
-
+  role = getCookie("rol");
   const nameDiv = document.getElementById("name");
   nameDiv.innerHTML = `<div class="header">Bienvenido ${role}</div>`;
 
   configureButtons(role);
+});
+
+document.querySelectorAll(".btn-custom").forEach((button) => {
+  // Asignar el evento click para redireccionar usando el atributo data-url
+  button.addEventListener("click", () => {
+    const url = button.getAttribute("data-url");
+    window.location.href = url;
+  });
 });

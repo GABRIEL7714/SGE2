@@ -31,12 +31,6 @@ app.get("/EventsUser", (req, res) => {
   );
 });
 
-app.get("/indexAdmin", (req, res) => {
-  res.sendFile(
-    path.join(__dirname, "..", "Web", "pages", "Admin", "indexAdmin.html")
-  );
-});
-
 app.get("/Register", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "Web", "pages", "singUp.html"));
 });
@@ -62,5 +56,44 @@ app.get("/Categorias", (req, res) => {
 app.get("/Payment", (req, res) => {
   res.sendFile(
     path.join(__dirname, "..", "Web", "pages", "User", "payment.html")
+  );
+});
+
+//ADMINISTRADOR
+
+app.get("/indexAdmin", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "..", "Web", "pages", "Admin", "indexAdmin.html")
+  );
+});
+
+app.get("/GestionarEventos", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "..", "Web", "pages", "Admin", "gestionarEventos.html")
+  );
+});
+
+app.get("/CrearEvento", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "..", "Web", "pages", "Admin", "crearEvento.html")
+  );
+});
+
+app.get("/AdaptarEvento", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "..", "Web", "pages", "Admin", "adaptarEvento.html")
+  );
+});
+
+app.get("/ActividadesEvento", (req, res) => {
+  res.sendFile(
+    path.join(
+      __dirname,
+      "..",
+      "Web",
+      "pages",
+      "Admin",
+      "actividadesEvento.html"
+    )
   );
 });

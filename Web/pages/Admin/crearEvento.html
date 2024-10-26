@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crear un nuevo evento</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .form-label {
+        background-color: #e9ecef; /* Fondo gris claro */
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-weight: bold;
+        width: 100%;
+      }
+      .header {
+        background-color: #6c757d;
+        color: white;
+        padding: 20px;
+        text-align: center;
+        font-size: 2.5rem;
+      }
+    </style>
+  </head>
+  <body class="d-flex flex-column min-vh-100">
+    <header id="header"></header>
+    <main class="flex-grow-1">
+      <div class="header">Crear un nuevo evento</div>
+      <div class="container mt-3">
+        <div
+          class="bg-white p-4 rounded shadow-sm mx-auto"
+          style="max-width: 600px"
+        >
+          <form>
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input
+                type="text"
+                class="form-control"
+                id="nombre"
+                placeholder="Nombre del evento"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="tipo" class="form-label">Tipo de evento</label>
+              <input
+                type="text"
+                class="form-control"
+                id="tipo"
+                placeholder="Tipo de evento"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="descripcion" class="form-label">Descripción</label>
+              <textarea
+                class="form-control"
+                id="descripcion"
+                rows="3"
+                placeholder="Descripción del evento"
+              ></textarea>
+            </div>
+
+            <!-- Nuevo campo para seleccionar si es público o no -->
+            <div class="mb-3">
+              <label for="publico" class="form-label">Visibilidad</label>
+              <select class="form-control" id="publico">
+                <option value="publico">Público</option>
+                <option value="privado">Privado</option>
+              </select>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="inicio" class="form-label">Inicio</label>
+                <input type="date" class="form-control" id="inicio" />
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="fin" class="form-label">Fin</label>
+                <input type="date" class="form-control" id="fin" />
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-between">
+              <button
+                type="button"
+                onclick="window.location.href='/GestionarEventos';"
+                class="btn btn-danger"
+              >
+                Cancelar
+              </button>
+              <button
+                type="button"
+                onclick="window.location.href='/AdaptarEvento';"
+                class="btn btn-primary"
+              >
+                Adaptar Evento
+              </button>
+              <button type="submit" class="btn btn-success">Guardar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+    <footer id="footer"></footer>
+
+    <script src="/api/user-menu.js"></script>
+    <script src="/api/crearEvento.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>

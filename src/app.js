@@ -42,10 +42,12 @@ import usersRoutes from "./routes/users.routes.js";
 // import inscriptionsRoutes from './routes/inscriptions.routes.js';
 import logInRoutes from "./routes/logIn.routes.js";
 import eventsRoutes from "./routes/events.routes.js";
+import activitiesRoutes from "./routes/activities.routes.js";
 
 app.use(usersRoutes);
 // app.use(inscriptionsRoutes);
 app.use(logInRoutes);
 app.use(eventsRoutes);
+app.use(activitiesRoutes);
 
 export default app;
