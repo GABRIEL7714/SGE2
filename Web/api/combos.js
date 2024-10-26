@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("eventTitle").textContent = eventTitle;
 
   // Determinar si es preinscripción o inscripción
+  console.log(fechaInscripcion);
   const botonTexto =
     today < fechaInscripcion ? "Pre Inscribirse" : "Inscribirse";
   document.getElementById("inscribirButton").textContent = botonTexto;

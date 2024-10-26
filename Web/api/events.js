@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       const eventCard = document.createElement("div");
       eventCard.classList.add("col-md-4", "mb-4");
 
+      console.log(event.fechainscripcion);
       eventCard.innerHTML = `
       <div class="card h-100">
         <div class="card-img-top d-flex align-items-center justify-content-center" style="background-color: #e0e0e0; height: 200px;">
@@ -20,7 +21,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         <div class="card-body text-center">
           <h5 class="card-title">${event.descripcion}</h5>
           <p class="card-text">${event.fechainicio}</p>
-          <button class="btn btn-success" onclick="verCombos('${event.nombre}', '${event.fechainscripcion}')">Ver Combos</button>
+          <button class="btn btn-success" onclick="verCombos('${event.nombre}', '${event.fechaincripcion}')">Ver Combos</button>
         </div>
       </div>
     `;
