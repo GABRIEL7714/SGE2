@@ -19,7 +19,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         <div class="card-img-top d-flex align-items-center justify-content-center" style="background-color: #e0e0e0; height: 200px;">
         </div>
         <div class="card-body text-center">
-          <h5 class="card-title">${event.descripcion}</h5>
+          <h4 class="card-title">${event.nombre}</h4>
+          <h6 class="card-text">${event.descripcion}</h6>
           <p class="card-text">${event.fechainicio}</p>
           <button class="btn btn-success" onclick="verCombos('${event.nombre}', '${event.fechaincripcion}')">Ver Combos</button>
         </div>

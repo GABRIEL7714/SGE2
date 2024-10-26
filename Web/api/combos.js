@@ -63,11 +63,11 @@ document.addEventListener("DOMContentLoaded", function () {
   document
     .getElementById("inscribirButton")
     .addEventListener("click", function () {
-      const isAuthenticated = sessionStorage.getItem("authenticated"); // Validar si el usuario está autenticado
+      const isAuthenticated = getCookie("loggedIn");
 
       if (!isAuthenticated) {
         // Si el usuario no está autenticado, redirigir a la página de inicio de sesión
-        window.location.href = "/Web/pages/logIn.html";
+        window.location.href = "/pages/logIn.html";
       } else {
         if (selectedComboId === null) {
           alert("Por favor selecciona un combo antes de continuar.");
@@ -75,9 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         // Si el usuario ya está autenticado, redirigir según la fecha de inscripción
         let nextPage =
-          today < fechaInscripcion
-            ? "/pages/preinscription.html"
-            : "/pages/categories.html";
+          today < fechaInscripcion ? "/PreInscripcion" : "/Categorias";
         // Pasar el título del evento y el ID del combo seleccionado en la URL
         window.location.href = `${nextPage}?title=${encodeURIComponent(
           eventTitle

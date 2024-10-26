@@ -46,3 +46,21 @@ app.get("/Combos", (req, res) => {
     path.join(__dirname, "..", "Web", "pages", "User", "combos.html")
   );
 });
+
+app.get("/PreInscripcion", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "..", "Web", "pages", "User", "preinscription.html")
+  );
+});
+
+app.get("/Categorias", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "..", "Web", "pages", "User", "categories.html")
+  );
+});
+
+app.get("/Payment", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "..", "Web", "pages", "User", "payment.html")
+  );
+});
