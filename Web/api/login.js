@@ -3,8 +3,8 @@ const mensajeError = document.getElementsByName("error")[0];
 document.getElementById("login-form").addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const correo = document.getElementById("correo").value; // El campo para el correo
-  const contraseña = document.getElementById("contraseña").value; // El campo para la contraseña
+  const correo = document.getElementById("correo").value;
+  const contraseña = document.getElementById("contraseña").value;
 
   try {
     const res = await fetch("http://localhost:5000/api/login", {
@@ -12,30 +12,21 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        correo, // Enviar correo
-        contraseña, // Enviar contraseña
-      }),
+      credentials: "include",
+      body: JSON.stringify({ correo, contraseña }),
     });
 
-    console.log("bien1");
-
     if (!res.ok) {
-      const mensajeError = document.getElementsByName("error")[0];
-      mensajeError.classList.toggle("escondido", false); // Mostrar mensaje de error si es necesario
+      mensajeError.classList.remove("escondido");
+      mensajeError.style.display = "block";
       return;
     }
 
-    console.log("bien2");
-
-    const reJson = await res.json(); // Asegúrate de que se parsea la respuesta a JSON
-    console.log("bien3", reJson);
+    const reJson = await res.json();
 
     if (reJson.redirect) {
-      window.location.href = reJson.redirect; // Redirigir a la ruta que envió el servidor
+      window.location.href = reJson.redirect;
     }
-
-    console.log("bien4");
   } catch (error) {
     console.error("Error en la solicitud: ", error);
   }

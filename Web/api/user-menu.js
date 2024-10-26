@@ -1,3 +1,15 @@
+// Función auxiliar para obtener el valor de una cookie por nombre
+function getCookie(name) {
+  const cookies = document.cookie.split("; ");
+  for (let cookie of cookies) {
+    const [cookieName, cookieValue] = cookie.split("=");
+    if (cookieName === name) {
+      return decodeURIComponent(cookieValue);
+    }
+  }
+  return null;
+}
+
 // Función para cargar el header y luego ejecutar renderUserMenu
 function loadHeaderAndUserMenu() {
   fetch("/includes/header.html")
@@ -33,60 +45,36 @@ function renderUserMenu() {
     return;
   }
 
-  // Asegurarnos de que el valor por defecto de loggedIn sea 'false' si no existe
-  if (localStorage.getItem("loggedIn") === null) {
-    localStorage.setItem("loggedIn", "false"); // Definir 'false' como valor predeterminado
-  }
+  // Comprobar si la cookie 'loggedIn' está presente y es 'true'
+  const loggedIn = getCookie("loggedIn") === "true";
+  const rol = getCookie("rol");
 
-  let loggedIn = localStorage.getItem("loggedIn") === "true";
-  let rol = JSON.parse(localStorage.getItem("rol")) || []; // Cargar rol desde localStorage
-  let currentRole = localStorage.getItem("currentRole") || rol; // Si no hay currentRole, usar el primer rol
-
-  console.log("Estado de loggedIn es: ", loggedIn);
-  console.log("rol disponibles: ", rol);
-  console.log("Rol actual: ", currentRole);
+  console.log("Estado de loggedIn es:", loggedIn);
+  console.log("Rol actual:", rol);
 
   if (loggedIn) {
     let menuHtml = `
-            <div class="dropdown d-inline-block">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="roleDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    ${currentRole} <!-- Rol actual -->
-                </button>
-                <div class="dropdown-menu" aria-labelledby="roleDropdown">
-        `;
-
-    // Añadir todos los rol al dropdown
-    rol.forEach((role) => {
-      // Resaltar el rol actual en el menú desplegable
-      let activeClass = role === currentRole ? "active" : "";
-      menuHtml += `<a class="dropdown-item ${activeClass}" href="#" onclick="changeRole('${role}')">${role}</a>`;
-    });
-
-    menuHtml += `</div></div>`;
-
-    // Añadir opciones de cerrar sesión
-    menuHtml += `
-            <span class="ml-3">Usuario</span>
-            <a href="#" class="ml-3" onclick="logout()">Cerrar sesión</a>
-        `;
-
+      <div class="d-flex align-items-center">
+        <div class="role-display bg-light rounded p-2 mr-3" style="border: 1px solid #ddd;">
+          <span class="current-role font-weight-bold text-primary">${
+            rol || "Usuario"
+          }</span>
+        </div>
+        <button class="btn btn-outline-danger btn-sm" onclick="logout()">Cerrar sesión</button>
+      </div>
+    `;
     userMenu.innerHTML = menuHtml;
   } else {
     userMenu.innerHTML = `<a href="/logIn" class="btn btn-outline-primary">Iniciar Sesión</a>`;
   }
 }
 
-// Función para cambiar el rol actual
-function changeRole(role) {
-  localStorage.setItem("currentRole", role); // Guardar el nuevo rol en localStorage
-  renderUserMenu(); // Vuelve a renderizar el menú con el nuevo rol
-}
-
 // Función para cerrar sesión
 function logout() {
-  localStorage.setItem("loggedIn", "false");
-  localStorage.removeItem("rol");
-  localStorage.removeItem("currentRole");
+  // Eliminar cookies de loggedIn y rol configurando su expiración en el pasado
+  document.cookie = "loggedIn=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  document.cookie = "rol=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  window.location.href = "/";
   renderUserMenu();
 }
 

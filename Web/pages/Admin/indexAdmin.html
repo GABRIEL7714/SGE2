@@ -35,23 +35,45 @@
   <body class="d-flex flex-column min-vh-100">
     <header id="header"></header>
     <main class="flex-grow-1">
-      <div class="header">Cuenta de Administrador</div>
+      <div id="name"></div>
 
       <div class="container mt-5">
         <div class="container-buttons">
-          <button type="button" class="btn btn-success btn-custom">
+          <button
+            type="button"
+            class="btn btn-success btn-custom"
+            id="btn-gestionar-eventos"
+          >
             Gestionar Eventos
           </button>
-          <button type="button" class="btn btn-success btn-custom">
+          <button
+            type="button"
+            class="btn btn-success btn-custom"
+            id="btn-gestionar-roles"
+          >
             Gestionar Roles
           </button>
-          <button type="button" class="btn btn-success btn-custom">Caja</button>
+          <button
+            type="button"
+            class="btn btn-success btn-custom"
+            id="btn-caja"
+          >
+            Caja
+          </button>
         </div>
         <div class="container-buttons">
-          <button type="button" class="btn btn-success btn-custom">
+          <button
+            type="button"
+            class="btn btn-success btn-custom"
+            id="btn-asistencias"
+          >
             Asistencias
           </button>
-          <button type="button" class="btn btn-success btn-custom">
+          <button
+            type="button"
+            class="btn btn-success btn-custom"
+            id="btn-reportes"
+          >
             Reportes
           </button>
         </div>
@@ -61,7 +83,9 @@
     <footer id="footer"></footer>
 
     <!-- Bootstrap JS and dependencies -->
-    <script src="/Web/backend/user-menu.js"></script>
+
+    <script src="/api/user-menu.js"></script>
+    <script src="/api/indexAdmin.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
