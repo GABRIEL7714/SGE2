@@ -1,21 +1,50 @@
 function buscarPersona() {
-  // Simulación de consulta a la base de datos
-  const documento = document.getElementById("documento").value;
-  const personaEncontrada = documento === "12345678"; // Ejemplo de número de documento
+  const urlParams = new URLSearchParams(window.location.search);
+  const rolNuevo = urlParams.get("rol");
 
-  if (personaEncontrada) {
-    // Mostrar modal de persona encontrada
-    const nombrePersona = "Juan Rivero Martinez"; // Este valor puede venir de la base de datos
-    document.getElementById("nombrePersona").innerText = nombrePersona;
-    const personaEncontradaModal = new bootstrap.Modal(
-      document.getElementById("personaEncontradaModal")
-    );
-    personaEncontradaModal.show();
-  } else {
-    // Mostrar modal de persona no encontrada
-    const personaNoEncontradaModal = new bootstrap.Modal(
-      document.getElementById("personaNoEncontradaModal")
-    );
-    personaNoEncontradaModal.show();
+  const numerodoc = document.getElementById("documento").value;
+  changeUserRole(numerodoc, rolNuevo);
+}
+
+async function changeUserRole(numerodoc, rolNuevo) {
+  try {
+    const res = await fetch("http://localhost:5000/changeRol", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        numerodoc,
+        rolNuevo,
+      }),
+    });
+
+    // Verificación de respuesta del servidor
+    if (!res.ok) {
+      const personaNoEncontradaModal = new bootstrap.Modal(
+        document.getElementById("personaNoEncontradaModal")
+      );
+      personaNoEncontradaModal.show();
+      return;
+    }
+
+    const responseJson = await res.json();
+
+    // Si el servidor indica redirección, muestra el modal de éxito y redirige
+    if (responseJson.redirect) {
+      const modalExito = new bootstrap.Modal(
+        document.getElementById("modalExito")
+      );
+      modalExito.show();
+
+      setTimeout(() => {
+        window.location.href = responseJson.redirect;
+      }, 2000);
+    } else {
+      alert("Rol del usuario actualizado exitosamente.");
+    }
+  } catch (error) {
+    console.error("Error en la solicitud: ", error);
   }
 }
