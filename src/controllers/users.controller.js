@@ -1,5 +1,7 @@
 import pool from "../db.js";
 
+
+//UC-001
 export const getAllUsers = async (req, res) => {
   //Connect to database
   const posts = await pool.query("SELECT * FROM usuario;");
@@ -7,6 +9,7 @@ export const getAllUsers = async (req, res) => {
   return res.json(posts);
 };
 
+//UC-002
 export const createUser = async (req, res) => {
   let { nombre, apellido, correo, telefono, contrasena, tipodoc, numerodoc } =
     req.body;
@@ -37,6 +40,7 @@ export const createUser = async (req, res) => {
   }
 };
 
+//UC-003
 export const changeRol = async (req, res) => {
   const { numerodoc, rolNuevo } = req.body;
 
