@@ -1,5 +1,6 @@
 import pool from "../db.js";
 
+//AC-001
 export const getAllEventActivities = async (req, res) => {
   const { id_evento } = req.body;
   const query = "SELECT * FROM actividad WHERE id_evento = $1";
@@ -15,6 +16,7 @@ export const getAllEventActivities = async (req, res) => {
   return res.json(posts);
 };
 
+//AC-002
 export const getEventActivitiesById = async (req, res) => {
   const { id_evento } = req.body; // Obtener el id_evento de los parámetros de la URL
   const query = "SELECT * FROM actividad WHERE id_evento = $1";
