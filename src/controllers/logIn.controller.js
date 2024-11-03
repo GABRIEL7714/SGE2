@@ -1,6 +1,8 @@
 import pool from "../db.js";
 
 // Ruta de inicio de sesión
+
+//LC-001
 export const logIn = async (req, res) => {
   const { correo, contraseña } = req.body;
 
