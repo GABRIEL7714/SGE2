@@ -8,13 +8,24 @@
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <style>
+      h1 {
+        background-color: #6c757d;
+        color: white;
+        padding: 20px;
+        text-align: center;
+        font-size: 2.5rem;
+      }
+    </style>
   </head>
 
   <body class="d-flex flex-column min-vh-100">
     <header id="header"></header>
+    <h1 class="header">Eventos Disponibles</h1>
 
     <main class="flex-grow-1">
-      <div class="container mt-4">
+      <!-- Usamos clases de Bootstrap para centrar el título en la página -->
+      <div class="container">
         <div class="row" id="eventContainer">
           <!-- Eventos se cargarán aquí dinámicamente -->
         </div>

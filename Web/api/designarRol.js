@@ -1,3 +1,20 @@
+function getQueryParam(param) {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(param);
+}
+
+// Obtener el rol de la URL y actualizar el encabezado
+const rol = getQueryParam("rol");
+
+if (rol) {
+  // Actualizar el encabezado con "Designar" seguido del rol
+  document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("headerRol").textContent = `Designar ${
+      rol.charAt(0).toUpperCase() + rol.slice(1)
+    }`;
+  });
+}
+
 function buscarPersona() {
   const urlParams = new URLSearchParams(window.location.search);
   const rolNuevo = urlParams.get("rol");
@@ -32,15 +49,21 @@ async function changeUserRole(numerodoc, rolNuevo) {
     const responseJson = await res.json();
 
     // Si el servidor indica redirección, muestra el modal de éxito y redirige
-    if (responseJson.redirect) {
+    if (responseJson.redirect && responseJson.user) {
+      // Actualiza los elementos del modal con los datos del usuario
+      document.getElementById("nombreUsuario").textContent =
+        responseJson.user.nombre;
+      document.getElementById("apellidoUsuario").textContent =
+        responseJson.user.apellido;
+      document.getElementById("telefonoUsuario").textContent =
+        responseJson.user.telefono;
+      document.getElementById("rolUsuario").textContent = responseJson.user.rol;
+
+      // Muestra el modal de éxito
       const modalExito = new bootstrap.Modal(
         document.getElementById("modalExito")
       );
       modalExito.show();
-
-      setTimeout(() => {
-        window.location.href = responseJson.redirect;
-      }, 2000);
     } else {
       alert("Rol del usuario actualizado exitosamente.");
     }
@@ -48,3 +71,7 @@ async function changeUserRole(numerodoc, rolNuevo) {
     console.error("Error en la solicitud: ", error);
   }
 }
+
+document.getElementById("volverButton").addEventListener("click", function () {
+  window.history.back();
+});

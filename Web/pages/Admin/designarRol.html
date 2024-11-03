@@ -32,27 +32,9 @@
     <header id="header"></header>
 
     <!-- Main Content -->
-    <div
-      class="modal fade"
-      id="modalExito"
-      tabindex="-1"
-      aria-labelledby="modalExitoLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modalExitoLabel">Registro Exitoso</h5>
-          </div>
-          <div class="modal-body text-center">
-            Cambio de Rol exitoso, redirigiendo..
-          </div>
-        </div>
-      </div>
-    </div>
 
     <main class="flex-grow-1">
-      <div class="header">Designar Encargado/Colaborador</div>
+      <div class="header" id="headerRol">Designar Rol</div>
       <div class="container text-center">
         <label for="documento" class="form-label"
           >Ingresa el N° de documento de la persona</label
@@ -69,24 +51,26 @@
           </button>
         </div>
       </div>
+
+      <div class="text-center mt-3">
+        <button class="btn btn-primary" id="volverButton">Volver</button>
+      </div>
     </main>
 
     <!-- Footer -->
     <footer id="footer"></footer>
-
-    <!-- Modal para "Se encontró a la persona" -->
     <div
       class="modal fade"
-      id="personaEncontradaModal"
+      id="modalExito"
       tabindex="-1"
-      aria-labelledby="personaEncontradaLabel"
+      aria-labelledby="modalExitoLabel"
       aria-hidden="true"
     >
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="personaEncontradaLabel">
-              Se encontró a la persona
+            <h5 class="modal-title" id="modalExitoLabel">
+              Rol Actualizado Exitosamente
             </h5>
             <button
               type="button"
@@ -96,7 +80,10 @@
             ></button>
           </div>
           <div class="modal-body">
-            <p id="nombrePersona">Juan Rivero Martinez</p>
+            <p><strong>Nombre:</strong> <span id="nombreUsuario"></span></p>
+            <p><strong>Apellido:</strong> <span id="apellidoUsuario"></span></p>
+            <p><strong>Teléfono:</strong> <span id="telefonoUsuario"></span></p>
+            <p><strong>Rol:</strong> <span id="rolUsuario"></span></p>
           </div>
           <div class="modal-footer">
             <button
@@ -104,45 +91,14 @@
               class="btn btn-secondary"
               data-bs-dismiss="modal"
             >
-              Cancelar
+              Ok
             </button>
-            <button type="button" class="btn btn-primary">Designar</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal para "No se encontró a la persona" -->
-    <div
-      class="modal fade"
-      id="personaNoEncontradaModal"
-      tabindex="-1"
-      aria-labelledby="personaNoEncontradaLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="personaNoEncontradaLabel">
-              No se encontró a la persona
-            </h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <p>Este N° de documento no está registrado</p>
-          </div>
-          <div class="modal-footer">
             <button
               type="button"
               class="btn btn-primary"
               data-bs-dismiss="modal"
             >
-              Ok
+              Designar
             </button>
           </div>
         </div>

@@ -83,3 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 });
+
+document.getElementById("volverButton").addEventListener("click", function () {
+  window.history.back();
+});

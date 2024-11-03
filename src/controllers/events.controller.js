@@ -1,7 +1,7 @@
 import pool from "../db.js";
 
 export const getAllEvents = async (req, res) => {
-  const events = await pool.query("SELECT * FROM evento;");
+  const events = await pool.query("SELECT * FROM evento ORDER BY fechainicio;");
   return res.json(events.rows);
 };
 
