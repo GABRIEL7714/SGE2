@@ -1,10 +1,12 @@
 import pool from "../db.js";
 
+//EC-001
 export const getAllEvents = async (req, res) => {
   const events = await pool.query("SELECT * FROM evento ORDER BY fechainicio;");
   return res.json(events.rows);
 };
 
+//EC-002
 export const getEvent = async (req, res) => {
   // Obtén el ID del cuerpo de la solicitud
   const { id } = req.body;
@@ -25,6 +27,7 @@ export const getEvent = async (req, res) => {
   }
 };
 
+//EC-003
 export const createEvent = async (req, res) => {
   let {
     nombre,
@@ -60,6 +63,7 @@ export const createEvent = async (req, res) => {
   }
 };
 
+//EC-004
 export const updateEvent = async (req, res) => {
   let {
     idEvento,
