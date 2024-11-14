@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registrar Gasto/Ingreso</title>
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .form-container {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        border: 1px solid #ccc !important;
+        border-radius: 8px;
+      }
+      .header {
+        background-color: #ddd !important;
+        padding: 10px;
+        text-align: center;
+        font-weight: bold;
+      }
+      .btn-cancel {
+        background-color: #ff4d4d !important;
+        color: white;
+      }
+      .btn-register {
+        background-color: #28a745 !important;
+        color: white;
+      }
+    </style>
+  </head>
+  <body class="d-flex flex-column min-vh-100">
+    <header id="header"></header>
+    <main class="flex-grow-1">
+      <div class="form-container">
+        <div class="header">Registrar Gasto/Ingreso</div>
+        <form id="registroForm">
+          <div class="form-group">
+            <label for="concepto">Concepto</label>
+            <input
+              type="text"
+              class="form-control"
+              id="concepto"
+              placeholder="Concepto"
+            />
+          </div>
+          <div class="form-group">
+            <label for="numRecibo">N° de recibo</label>
+            <input
+              type="text"
+              class="form-control"
+              id="numRecibo"
+              placeholder="N° de recibo"
+            />
+          </div>
+          <div class="form-group">
+            <label for="monto">Monto</label>
+            <input
+              type="text"
+              class="form-control"
+              id="monto"
+              placeholder="Monto"
+            />
+          </div>
+          <div class="form-group">
+            <label for="fecha">Fecha</label>
+            <input type="date" class="form-control" id="fecha" />
+          </div>
+          <div class="d-flex justify-content-between">
+            <button type="button" class="btn btn-cancel">Cancelar</button>
+            <button type="button" class="btn btn-register" id="btnRegistrar">
+              Registrar
+            </button>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <footer id="footer"></footer>
+    <script src="/api/user-menu.js"></script>
+    <script src="/api/ingresoEgreso.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>

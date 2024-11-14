@@ -115,3 +115,26 @@ app.get("/DesignarRol", (req, res) => {
     path.join(__dirname, "..", "Web", "pages", "Admin", "designarRol.html")
   );
 });
+
+app.get("/CrearActividad", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "..", "Web", "pages", "Admin", "crearActividad.html")
+  );
+});
+
+app.get("/Caja", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "..", "Web", "pages", "Admin", "caja.html")
+  );
+});
+app.get("/CajaEvento", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "..", "Web", "pages", "Admin", "cajaEvento.html")
+  );
+});
+
+app.get("/IngresoEgreso", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "..", "Web", "pages", "Admin", "ingresoEgreso.html")
+  );
+});

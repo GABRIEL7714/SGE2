@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ingresos/Egresos</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="d-flex flex-column min-vh-100">
+    <header id="header"></header>
+    <main class="flex-grow-1">
+      <div class="container mt-5">
+        <div class="text-center mb-4">
+          <h4>Ingresos/Egresos</h4>
+        </div>
+        <div class="row">
+          <!-- Tabla de Ingresos -->
+          <div class="col-md-6">
+            <div class="card border-primary">
+              <div class="card-header bg-primary text-white text-center">
+                <h5>Ingresos</h5>
+              </div>
+              <div class="card-body">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Concepto</th>
+                      <th>Monto</th>
+                      <th>Nro de recibo</th>
+                    </tr>
+                  </thead>
+                  <tbody id="ingresos-body">
+                    <!-- Aquí se cargarán los datos de ingresos -->
+                  </tbody>
+                </table>
+              </div>
+              <div class="card-footer text-center">
+                <button id="btnAgregarIngreso" class="btn btn-primary">
+                  Agregar Ingreso
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tabla de Egresos -->
+          <div class="col-md-6">
+            <div class="card border-danger">
+              <div class="card-header bg-danger text-white text-center">
+                <h5>Egresos</h5>
+              </div>
+              <div class="card-body">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Concepto</th>
+                      <th>Monto</th>
+                      <th>Nro de recibo</th>
+                    </tr>
+                  </thead>
+                  <tbody id="egresos-body"></tbody>
+                </table>
+              </div>
+              <div class="card-footer text-center">
+                <button id="btnAgregarGasto" class="btn btn-danger">
+                  Agregar Gasto
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer"></footer>
+    <script src="/api/user-menu.js"></script>
+    <script src="/api/cajaEvento.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>
