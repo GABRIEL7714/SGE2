@@ -39,9 +39,8 @@ async function cargarEvento(id) {
       document.getElementById("fin").value = evento.fechafin
         ? evento.fechafin.split("T")[0]
         : "";
-      document.getElementById("fechaincripcion").value = evento.fechaincripcion
-        ? evento.fechaincripcion.split("T")[0]
-        : "";
+      document.getElementById("fechainscripcion").value =
+        evento.fechainscripcion ? evento.fechainscripcion.split("T")[0] : "";
       document.getElementById("publico").value = evento.publica
         ? "publico"
         : "privado";
@@ -64,6 +63,7 @@ document.getElementById("event-form").addEventListener("submit", async (e) => {
   const publica = document.getElementById("publico").value === "publico";
   const fechainicio = document.getElementById("inicio").value;
   const fechafin = document.getElementById("fin").value;
+  const fechainscripcion = document.getElementById("fechainscripcion").value;
 
   try {
     const res = await fetch("http://localhost:5000/createEvent", {
@@ -79,6 +79,7 @@ document.getElementById("event-form").addEventListener("submit", async (e) => {
         publica,
         fechainicio,
         fechafin,
+        fechainscripcion,
       }),
     });
 
