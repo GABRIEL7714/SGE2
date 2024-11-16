@@ -1,7 +1,11 @@
 document.addEventListener("DOMContentLoaded", async function () {
   try {
     const params = new URLSearchParams(window.location.search);
-    const id_evento = params.get("id"); // Por ejemplo, id_evento=1
+    id_evento = params.get("id");
+    if (localStorage.getItem("refreshPreviousPage") === "true") {
+      localStorage.removeItem("refreshPreviousPage"); // Elimina la marca
+      location.reload(); // Recarga la página para actualizar la información
+    }
 
     console.log("id evenot");
     console.log(id_evento);
@@ -38,14 +42,19 @@ document.addEventListener("DOMContentLoaded", async function () {
                 <td>${actividad.nombre}</td>
                 <td>${actividad.tipo}</td>
                 <td>${actividad.expositor}</td>
-                <td>${actividad.fecha}</td>
-                <td>${actividad.inicio}</td>
-                <td>${actividad.fin}</td>
+                <td>${actividad.date}</td>
+                <td>${actividad.hora_inicio}</td>
+                <td>${actividad.hora_fin}</td>
                 <td class="${
-                  actividad.ambiente === "NO" ? "text-danger" : ""
-                }">${actividad.ambiente}</td>
+                  actividad.id_ambiente === null ? "text-danger" : ""
+                }">
+  ${actividad.id_ambiente === null ? "No asignado" : actividad.locacion}
+</td>
+
                 <td>
-                    <button class="btn btn-primary btn-sm">Editar</button>
+                    <button class="btn btn-primary btn-sm" onclick="editarActividad('${
+                      actividad.id
+                    }')">Editar</button>
                     <button class="btn btn-success btn-sm">Asignar ambiente</button>
                 </td>
             `;
@@ -56,4 +65,14 @@ document.addEventListener("DOMContentLoaded", async function () {
   } catch (error) {
     console.error("Error cargando actividades:", error);
   }
+
+  document
+    .getElementById("crearActividad")
+    .addEventListener("click", function () {
+      window.location.href = `/CrearActividad?eventId=${id_evento}`;
+    });
 });
+
+function editarActividad(idActividad) {
+  window.location.href = `/EditarActividad?id=${idActividad}`;
+}

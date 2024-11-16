@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Crear Nueva Actividad</title>
+    <title>Editar Actividad</title>
     <link
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       rel="stylesheet"
@@ -12,7 +12,7 @@
   <body class="d-flex flex-column min-vh-100">
     <header id="header"></header>
     <main class="flex-grow-1">
-      <!-- Modal de éxito para actividad creada -->
+      <!-- Modal de éxito para actividad actualizada -->
       <div
         class="modal fade"
         id="modalExito"
@@ -24,11 +24,12 @@
           <div class="modal-content">
             <div class="modal-header bg-success text-white">
               <h5 class="modal-title" id="modalExitoLabel">
-                ¡Actividad Creada!
+                ¡Actividad Actualizada!
               </h5>
             </div>
             <div class="modal-body text-center">
-              La actividad se ha creado exitosamente. Serás redirigido en breve.
+              La actividad se ha actualizado exitosamente. Serás redirigido en
+              breve.
             </div>
             <div class="modal-footer">
               <button
@@ -46,7 +47,7 @@
       <div class="container mt-5">
         <div class="card">
           <div class="card-header text-center bg-secondary text-white">
-            <h4>Crear una nueva actividad</h4>
+            <h4>Editar Actividad</h4>
           </div>
           <div class="card-body">
             <form id="activity-form">
@@ -146,7 +147,9 @@
                 >
                   Cancelar
                 </button>
-                <button type="submit" class="btn btn-success">Guardar</button>
+                <button type="submit" class="btn btn-success">
+                  Guardar Cambios
+                </button>
               </div>
             </form>
           </div>
@@ -155,8 +158,9 @@
     </main>
 
     <footer id="footer"></footer>
+
     <script src="/api/user-menu.js"></script>
-    <script src="/api/crearActividad.js"></script>
+    <script src="/api/editarActividad.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

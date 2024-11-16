@@ -144,3 +144,9 @@ app.get("/Asistencia", (req, res) => {
     path.join(__dirname, "..", "Web", "pages", "Admin", "asistencia.html")
   );
 });
+
+app.get("/EditarActividad", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "..", "Web", "pages", "Admin", "editarActividad.html")
+  );
+});
