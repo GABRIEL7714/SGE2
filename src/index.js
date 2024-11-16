@@ -122,9 +122,9 @@ app.get("/CrearActividad", (req, res) => {
   );
 });
 
-app.get("/Caja", (req, res) => {
+app.get("/GestionarCaja", (req, res) => {
   res.sendFile(
-    path.join(__dirname, "..", "Web", "pages", "Admin", "caja.html")
+    path.join(__dirname, "..", "Web", "pages", "Admin", "gestionarCaja.html")
   );
 });
 app.get("/CajaEvento", (req, res) => {
@@ -136,5 +136,11 @@ app.get("/CajaEvento", (req, res) => {
 app.get("/IngresoEgreso", (req, res) => {
   res.sendFile(
     path.join(__dirname, "..", "Web", "pages", "Admin", "ingresoEgreso.html")
+  );
+});
+
+app.get("/Asistencia", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "..", "Web", "pages", "Admin", "asistencia.html")
   );
 });
