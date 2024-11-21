@@ -193,3 +193,7 @@ app.get("/Reportes", (req, res) => {
     path.join(__dirname, "..", "Web", "pages", "Admin", "reportes.html")
   );
 });
+
+app.get("/UserInfo", (req, res) => {
+  res.sendFile(path.join(__dirname, "..", "Web", "pages", "userInfo.html"));
+});
