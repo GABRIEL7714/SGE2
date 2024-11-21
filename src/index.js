@@ -141,12 +141,55 @@ app.get("/IngresoEgreso", (req, res) => {
 
 app.get("/Asistencia", (req, res) => {
   res.sendFile(
-    path.join(__dirname, "..", "Web", "pages", "Admin", "asistencia.html")
+    path.join(__dirname, "..", "Web", "pages", "Admin", "asistenciaEvento.html")
   );
 });
 
 app.get("/EditarActividad", (req, res) => {
   res.sendFile(
     path.join(__dirname, "..", "Web", "pages", "Admin", "editarActividad.html")
+  );
+});
+
+app.get("/AsistenciaEvento", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "..", "Web", "pages", "Admin", "asistenciaEvento.html")
+  );
+});
+
+app.get("/AsignarAmbiente", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "..", "Web", "pages", "Admin", "asignarAmbiente.html")
+  );
+});
+
+app.get("/CrearAmbiente", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "..", "Web", "pages", "Admin", "crearAmbiente.html")
+  );
+});
+
+app.get("/EditarAmbiente", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "..", "Web", "pages", "Admin", "editarAmbiente.html")
+  );
+});
+
+app.get("/AsignarMateriales", (req, res) => {
+  res.sendFile(
+    path.join(
+      __dirname,
+      "..",
+      "Web",
+      "pages",
+      "Admin",
+      "asignarMateriales.html"
+    )
+  );
+});
+
+app.get("/Reportes", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "..", "Web", "pages", "Admin", "reportes.html")
   );
 });

@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // Usamos un bucle para procesar cada evento
     for (const evento of eventos) {
-      const idEvento = evento.id; // Asegúrate de que el ID del evento esté disponible
+      const idEvento = evento.id;
 
       // Hacemos la solicitud para obtener el número de actividades
       console.log("SI ENTRA ANTES DEL FETCH");
@@ -34,7 +34,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         );
       } else {
         const data = await responseActivities.json(); // Extraemos el número de actividades
-        numberOfActivities = data.numberOfActivities; // Asignamos el número de actividades
+        numberOfActivities = data.data; // Asignamos el número de actividades
+        console.log(data.data);
       }
 
       // Crear una nueva fila para la tabla

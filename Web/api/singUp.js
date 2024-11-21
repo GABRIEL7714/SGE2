@@ -1,5 +1,3 @@
-const mensajeError = document.getElementsByName("error")[0];
-
 document.getElementById("singUp-form").addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -30,6 +28,10 @@ document.getElementById("singUp-form").addEventListener("submit", async (e) => {
     });
 
     if (!res.ok) {
+      const errorResponse = await res.json(); // Obtiene el mensaje de error del backend
+      const mensajeError = document.getElementById("mensajeError");
+      mensajeError.textContent =
+        errorResponse.errorMessage || "Error desconocido al crear el usuario.";
       mensajeError.classList.remove("escondido");
       mensajeError.style.display = "block";
       return;
@@ -51,5 +53,10 @@ document.getElementById("singUp-form").addEventListener("submit", async (e) => {
     }
   } catch (error) {
     console.error("Error en la solicitud: ", error);
+    const mensajeError = document.getElementById("mensajeError");
+    mensajeError.textContent =
+      "Ocurrió un error inesperado. Intenta nuevamente.";
+    mensajeError.classList.remove("escondido");
+    mensajeError.style.display = "block";
   }
 });

@@ -1,3 +1,11 @@
+function editarActividad(idActividad) {
+  window.location.href = `/EditarActividad?id=${idActividad}`;
+}
+
+function asignarAmbiente(idActividad) {
+  window.location.href = `/AsignarAmbiente?id=${idActividad}`;
+}
+
 document.addEventListener("DOMContentLoaded", async function () {
   try {
     const params = new URLSearchParams(window.location.search);
@@ -55,7 +63,9 @@ document.addEventListener("DOMContentLoaded", async function () {
                     <button class="btn btn-primary btn-sm" onclick="editarActividad('${
                       actividad.id
                     }')">Editar</button>
-                    <button class="btn btn-success btn-sm">Asignar ambiente</button>
+                    <button class="btn btn-success btn-sm" onclick="asignarAmbiente('${
+                      actividad.id
+                    }')">Asignar ambiente</button>
                 </td>
             `;
 
@@ -72,7 +82,3 @@ document.addEventListener("DOMContentLoaded", async function () {
       window.location.href = `/CrearActividad?eventId=${id_evento}`;
     });
 });
-
-function editarActividad(idActividad) {
-  window.location.href = `/EditarActividad?id=${idActividad}`;
-}

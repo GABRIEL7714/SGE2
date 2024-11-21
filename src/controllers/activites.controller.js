@@ -2,56 +2,58 @@ import pool from "../db.js";
 
 //AC-001
 export const getAllEventActivities = async (req, res) => {
-  const { id_evento } = req.body;
-  const query = "SELECT * FROM actividad WHERE id_evento = $1";
-  const values = [id_evento];
-  const result = await pool.query(query, values);
+  const { id_evento } = req.body; // Obtener id_evento de la solicitud
 
-  if (result.rows.length > 0) {
-    return res.json(result.rows);
-  } else {
-    res.status(401).send("Error con la carga de Actividades");
+  // Llamar a la función remota (RPC) de Supabase
+  const { data, error } = await pool.rpc("get_actividades_por_evento", {
+    id_evento: id_evento,
+  }); // Llamada a la función
+
+  // Manejo de errores
+  if (error) {
+    return res
+      .status(401)
+      .send("Error con la carga de Actividades: " + error.message);
   }
 
-  return res.json(posts);
+  // Respuesta exitosa con las actividades
+  if (data.length > 0) {
+    return res.json(data);
+  } else {
+    return res
+      .status(404)
+      .send("No se encontraron actividades para el evento proporcionado.");
+  }
 };
 
 //AC-002
 export const getEventActivitiesById = async (req, res) => {
   const { id_evento } = req.body; // Obtener el id_evento de los parámetros del cuerpo de la solicitud
 
-  const query = `
-    SELECT 
-      actividad.*, 
-      ambiente.locacion
-    FROM 
-      actividad 
-    LEFT JOIN 
-      ambiente 
-    ON 
-      actividad.id_ambiente = ambiente.id
-    WHERE 
-      actividad.id_evento = $1
-    ORDER BY date;
-  `;
-  const values = [id_evento];
-
-  console.log("Si entra");
-  console.log(id_evento);
-
   try {
-    const result = await pool.query(query, values);
+    const { data, error } = await pool.rpc("get_event_activities_by_id", {
+      p_id_evento: id_evento,
+    });
 
-    if (result.rows.length > 0) {
-      console.log(result.rows);
-      return res.json(result.rows); // Enviar las actividades encontradas como JSON
+    // Manejo de errores
+    if (error) {
+      console.error("Error al obtener actividades:", error);
+      return res
+        .status(500)
+        .send("Error en el servidor al obtener las actividades.");
+    }
+
+    // Responder con los resultados
+    if (data.length > 0) {
+      console.log(data);
+      return res.json(data); // Enviar las actividades encontradas como JSON
     } else {
       return res
         .status(404)
         .send("No se encontraron actividades para el evento especificado.");
     }
   } catch (error) {
-    console.error("Error al obtener las actividades:", error);
+    console.error("Error al obtener actividades:", error);
     return res
       .status(500)
       .send("Error en el servidor al obtener las actividades.");
@@ -62,24 +64,28 @@ export const getNumberEventActivities = async (req, res) => {
   const { idEvento } = req.body;
   console.log("Si entra al getNumber", idEvento);
 
-  // Modificamos la consulta para contar las actividades
-  const query = "SELECT COUNT(*) as count FROM actividad WHERE id_evento = $1";
-  const values = [idEvento];
-
   try {
-    const result = await pool.query(query, values);
+    // Llamamos al procedimiento almacenado utilizando Supabase
+    const { data, error } = await pool.rpc("get_number_event_activities", {
+      p_id_evento: idEvento, // Nombre del parámetro definido en la función
+    });
 
-    // Verificamos el resultado antes de enviarlo
-    console.log("Resultado de la consulta:", result.rows);
-
-    if (result.rows.length > 0) {
-      const numberOfActivities = result.rows[0].count;
-      res.status(200).json({ numberOfActivities });
-    } else {
-      res.status(200).json({ numberOfActivities: 0 });
+    if (error) {
+      console.error("Error al llamar al procedimiento almacenado:", error);
+      return res
+        .status(500)
+        .json({ error: "Error al obtener el número de actividades" });
     }
+
+    console.log("Resultado del procedimiento:", data);
+
+    // data debería ser un array con el resultado
+    res.status(200).json({ data });
   } catch (error) {
-    console.error("Error al obtener el número de actividades:", error);
+    console.error(
+      "Error inesperado al obtener el número de actividades:",
+      error
+    );
     res
       .status(500)
       .json({ error: "Error al obtener el número de actividades" });

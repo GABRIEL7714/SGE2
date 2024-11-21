@@ -1,4 +1,4 @@
-import pool from "../db.js";
+import supabase from "../db.js";
 
 // Ruta de inicio de sesión
 
@@ -7,14 +7,24 @@ export const logIn = async (req, res) => {
   const { correo, contraseña } = req.body;
 
   try {
-    // Consultar la base de datos para verificar usuario
-    const query = "SELECT * FROM usuario WHERE correo = $1 AND contraseña = $2";
-    const values = [correo, contraseña];
-    const result = await pool.query(query, values);
+    // Llamada al procedimiento almacenado
+    console.log("Si entra");
+    const { data, error } = await supabase.rpc("verificar_usuario", {
+      correo_param: correo,
+      contrasena_param: contraseña,
+    });
+    console.log("NO");
+    if (error) {
+      console.error("Error llamando al procedimiento:", error);
+      throw error;
+    }
 
-    if (result.rows.length > 0) {
-      const rol = result.rows[0].rol;
+    console.log(data);
 
+    if (data && data.length > 0) {
+      const rol = data[0].rol_usuario; // Nota: Cambia esto si el alias en el procedimiento es diferente
+
+      // Configurar cookies
       res.cookie("rol", rol, {
         secure: false, // Cambia a true si usas HTTPS
         sameSite: "Lax",
@@ -27,7 +37,7 @@ export const logIn = async (req, res) => {
         maxAge: 3600000, // Tiempo en milisegundos
       });
 
-      // Envía el rol en la respuesta JSON
+      // Respuesta exitosa con redirección basada en el rol
       res.json({
         redirect: rol !== "usuario" ? "/indexAdmin" : "/EventsUser",
         rol,
@@ -36,7 +46,7 @@ export const logIn = async (req, res) => {
       res.status(401).send("Credenciales inválidas");
     }
   } catch (error) {
-    console.error(error);
+    console.error("Error en el servidor:", error);
     res.status(500).send("Error del servidor");
   }
 };

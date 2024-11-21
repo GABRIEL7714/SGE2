@@ -1,42 +1,63 @@
-import pool from "../db.js";
-
+import supabase from "../db.js";
 
 //UC-001
 export const getAllUsers = async (req, res) => {
-  //Connect to database
-  const posts = await pool.query("SELECT * FROM usuario;");
+  try {
+    // Llamada al procedimiento almacenado
+    const { data, error } = await supabase.rpc("obtener_usuarios");
 
-  return res.json(posts);
+    if (error) {
+      console.error("Error llamando al procedimiento:", error);
+      throw error;
+    }
+
+    res.json({
+      message: "Usuarios obtenidos exitosamente",
+      data,
+    });
+  } catch (error) {
+    console.error("Error llamando al procedimiento:", error);
+    res.status(500).json({ error: "Error obteniendo usuarios" });
+  }
 };
 
 //UC-002
+// Función para crear un usuario llamando al procedimiento almacenado
 export const createUser = async (req, res) => {
-  let { nombre, apellido, correo, telefono, contrasena, tipodoc, numerodoc } =
+  const { nombre, apellido, correo, telefono, contrasena, tipodoc, numerodoc } =
     req.body;
-  const rol = "usuario";
 
   try {
-    const query =
-      "INSERT INTO usuario (nombre, apellido, correo, telefono, contraseña, tipodoc, numerodoc, rol) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *";
-    const values = [
-      nombre,
-      apellido,
-      correo,
-      telefono,
-      contrasena,
-      tipodoc,
-      numerodoc,
-      rol,
-    ];
+    // Llamada al procedimiento almacenado
+    const { data, error } = await supabase.rpc("crear_usuario", {
+      nombre_param: nombre,
+      apellido_param: apellido,
+      correo_param: correo,
+      telefono_param: telefono,
+      contrasena_param: contrasena,
+      tipodoc_param: tipodoc,
+      numerodoc_param: numerodoc,
+    });
 
-    const result = await pool.query(query, values);
+    if (error) {
+      console.error("Error llamando al procedimiento:", error);
+      // Enviar respuesta y salir
+      return res.status(400).json({
+        message: "Error al crear el usuario",
+        errorMessage: error.message,
+      });
+    }
 
-    res.json({
+    // Respuesta en caso de éxito
+    return res.json({
+      message: "Usuario creado exitosamente",
+      data,
       redirect: "/logIn",
     });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: "Error creating user" });
+    console.error("Error inesperado:", error);
+    // Manejo del error general
+    return res.status(500).json({ error: "Error creando usuario" });
   }
 };
 
@@ -45,19 +66,24 @@ export const changeRol = async (req, res) => {
   const { numerodoc, rolNuevo } = req.body;
 
   try {
-    const query =
-      "UPDATE usuario SET rol = $1 WHERE numerodoc = $2 RETURNING *";
-    const values = [rolNuevo, numerodoc];
+    // Llamada al procedimiento almacenado
+    const { data, error } = await supabase.rpc("cambiar_rol_usuario", {
+      numerodoc_param: numerodoc,
+      rol_nuevo_param: rolNuevo,
+    });
 
-    const result = await pool.query(query, values);
+    if (error) {
+      console.error("Error llamando al procedimiento:", error);
+      throw error;
+    }
 
-    if (result.rowCount === 0) {
+    if (!data || data.length === 0) {
       return res.status(404).json({ error: "User not found" });
     }
 
     res.json({
       message: "User role updated successfully",
-      user: result.rows[0],
+      user: data[0],
       redirect: "/indexAdmin",
     });
   } catch (error) {
