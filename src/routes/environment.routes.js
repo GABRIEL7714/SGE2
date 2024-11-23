@@ -12,7 +12,7 @@ import {
 const router = Router();
 
 // Definir las rutas para ambientes
-router.post("/getAllAmbientes", getAllAmbientes);
+router.get("/getAllAmbientes", getAllAmbientes);
 router.post("/getAmbienteById", getAmbienteById);
 router.post("/createAmbiente", createAmbiente);
 router.post("/updateAmbiente", updateAmbiente);

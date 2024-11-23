@@ -2,6 +2,25 @@ function asignarMateriales(idAmbiente) {
   window.location.href = `/AsignarMateriales?id=${idAmbiente}`;
 }
 
+async function seleccionarAmbiente(idAmbiente) {
+  const urlParams = new URLSearchParams(window.location.search);
+  const idActividad = urlParams.get("id");
+  try {
+    const response = await fetch(
+      "http://localhost:5000/updateEnviromentActivity",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ idAmbiente, idActividad }),
+      }
+    );
+  } catch (error) {
+    console.error("Error al cargar los ambientes:", error);
+  }
+}
+
 function editarAmbiente(idAmbiente) {
   window.location.href = `/EditarAmbiente?id=${idAmbiente}`;
 }
@@ -12,16 +31,11 @@ async function crearAmbiente() {
 }
 
 document.addEventListener("DOMContentLoaded", async function () {
-
   try {
     // Obtener los ambientes desde el servidor
     console.log("entroasignar");
-    const response = await fetch("http://localhost:5000/getAllAmbientes", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch("/getAllAmbientes");
+
     console.log(response);
     if (!response.ok) {
       throw new Error("Error al obtener los datos de ambientes.");
@@ -40,17 +54,22 @@ document.addEventListener("DOMContentLoaded", async function () {
 
       // Crear las celdas para cada columna de datos
       row.innerHTML = `
-        <td>${ambiente.nombre}</td>
-        <td>${ambiente.ubicacion}</td>
+        <td>${ambiente.locacion}</td>
         <td>${ambiente.capacidad}</td>
         <td class="${ambiente.disponible ? "text-success" : "text-danger"}">
           ${ambiente.disponible ? "Disponible" : "No Disponible"}
         </td>
         <td>
           <div class="d-flex justify-content-center">
-            <button class="btn btn-primary btn-sm mx-2" onclick="editarAmbiente('${ambiente.id}')">Editar</button>
-            <button class="btn btn-secondary btn-sm mx-2" onclick="asignarMateriales('${ambiente.id}')">Asignar materiales</button>
-            <button class="btn btn-info btn-sm mx-2">Seleccionar</button>
+            <button class="btn btn-primary btn-sm mx-2" onclick="editarAmbiente('${
+              ambiente.id
+            }')">Editar</button>
+            <button class="btn btn-secondary btn-sm mx-2" onclick="asignarMateriales('${
+              ambiente.id
+            }')">Asignar materiales</button>
+            <button class="btn btn-info btn-sm mx-2" onclick="seleccionarAmbiente('${
+              ambiente.id
+            }')">Seleccionar</button>
           </div>
         </td>
       `;
