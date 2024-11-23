@@ -55,28 +55,41 @@ export const getAmbienteById = async (req, res) => {
 
 // AMB-003: Crear un nuevo ambiente
 export const createAmbiente = async (req, res) => {
-  const { nombre, ubicacion, capacidad, disponible } = req.body;
+  const { ubicacion, capacidad, disponible } = req.body;
+
+  if (!ubicacion || capacidad === undefined || disponible === undefined) {
+    return res
+      .status(400)
+      .json({ error: "Todos los campos (ubicacion, capacidad, disponible) son obligatorios." });
+  }
 
   try {
-    const query =
-      "INSERT INTO ambiente (nombre, ubicacion, capacidad, disponible) VALUES ($1, $2, $3, $4) RETURNING *";
-    const values = [nombre, ubicacion, capacidad, disponible];
+    // Uso de pool.rpc para invocar la función remota de creación
+    const { data, error } = await pool.rpc("create_ambiente", {
+      ubicacion_input: ubicacion,
+      capacidad_input: capacidad,
+      disponible_input: disponible,
+    });
 
-    const result = await pool.query(query, values);
+    if (error) {
+      console.error("Error al crear el ambiente:", error);
+      return res.status(500).json({ error: "Error al crear el ambiente." });
+    }
 
     res.json({
-      ambiente: result.rows[0], // Ambiente creado
+      ambiente: data[0], // Ambiente creado
       message: "Ambiente creado exitosamente.",
     });
   } catch (error) {
-    console.error("Error al crear el ambiente:", error);
-    return res.status(500).json({ error: "Error creando ambiente." });
+    console.error("Error interno en createAmbiente:", error);
+    return res
+      .status(500)
+      .json({ error: "Error interno al procesar la solicitud." });
   }
 };
-
 // AMB-004: Actualizar un ambiente existente
 export const updateAmbiente = async (req, res) => {
-  const { id, nombre, ubicacion, capacidad, disponible } = req.body;
+  const { id,ubicacion, capacidad, disponible } = req.body;
 
   if (!id) {
     return res.status(400).json({ error: "El ID del ambiente es obligatorio." });
@@ -85,7 +98,6 @@ export const updateAmbiente = async (req, res) => {
   try {
     const { data, error } = await pool.rpc("update_ambiente_by_id", {
       id_input: id,
-      nombre_input: nombre,
       ubicacion_input: ubicacion,
       capacidad_input: capacidad,
       disponible_input: disponible,
