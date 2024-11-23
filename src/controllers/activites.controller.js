@@ -104,32 +104,43 @@ export const createActivity = async (req, res) => {
     descripcion,
   } = req.body;
 
+  const id_ambiente = null;
+
   try {
-    // Consulta para insertar los datos en la tabla actividad
-    const query =
-      "INSERT INTO actividad (date, id_evento, hora_inicio, hora_fin, expositor, tipo, nombre, descripcion) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *";
-    const values = [
-      date,
-      id_evento,
-      hora_inicio,
-      hora_fin,
-      expositor,
-      tipo,
-      nombre,
-      descripcion,
-    ];
+    const { data, error } = await pool
+      .from("actividad")
+      .insert([
+        {
+          date,
+          id_evento,
+          id_ambiente,
+          hora_inicio,
+          hora_fin,
+          expositor,
+          tipo,
+          nombre,
+          descripcion,
+        },
+      ])
+      .select("*") // Devuelve la actividad creada
+      .single();
 
-    // Ejecutar la consulta
-    const result = await pool.query(query, values);
+    if (error) {
+      console.error("Error al crear la actividad:", error);
+      return res
+        .status(500)
+        .json({ error: "Error creando actividad", details: error.message });
+    }
 
-    // Devolver la actividad creada y redirigir
     res.json({
-      activity: result.rows[0], // Actividad creada
+      activity: data, // Actividad creada
       redirect: `/ActividadesEvento?id=${id_evento}`, // Redirigir con el ID del evento
     });
   } catch (error) {
-    console.error("Error al crear la actividad:", error);
-    return res.status(500).json({ error: "Error creando actividad" });
+    console.error("Error inesperado al crear la actividad:", error);
+    return res
+      .status(500)
+      .json({ error: "Error inesperado al crear actividad" });
   }
 };
 

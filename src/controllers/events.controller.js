@@ -19,7 +19,6 @@ export const getEvent = async (req, res) => {
   const { id } = req.body;
 
   try {
-    // Llama a la función creada en PostgreSQL usando supabase.rpc()
     const { data, error } = await pool.rpc("get_event_by_id", { p_id: id });
     console.log(data);
     if (error) {

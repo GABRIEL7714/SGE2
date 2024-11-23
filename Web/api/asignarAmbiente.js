@@ -1,5 +1,5 @@
 function asignarMateriales(idAmbiente) {
-  window.location.href = `/AsignarMateriales?id=${idAmbiente}`;
+  window.location.href = `/MaterialesAmbiente?id=${idAmbiente}`;
 }
 
 function editarAmbiente(idAmbiente) {
@@ -41,7 +41,7 @@ function llenarTabla() {
     accionesCell.innerHTML = `
         <div class="d-flex justify-content-center">
           <button class="btn btn-primary btn-sm mx-2" onclick="editarAmbiente(${id})">Editar</button>
-          <button class="btn btn-secondary btn-sm mx-2">Asignar materiales</button>
+          <button class="btn btn-secondary btn-sm mx-2" onclick="asignarMateriales(${id})">Asignar materiales</button>
           <button class="btn btn-info btn-sm mx-2">Seleccionar</button>
         </div>
       `;

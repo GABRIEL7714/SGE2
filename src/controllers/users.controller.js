@@ -1,5 +1,5 @@
 import pool from "../db.js";
-import QRCode from "qrcode"; // Asegúrate de instalar este paquete: npm install qrcode
+import QRCode from "qrcode";
 
 //UC-001 NO SE USA
 export const getAllUsers = async (req, res) => {
