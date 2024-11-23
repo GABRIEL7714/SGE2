@@ -1,5 +1,6 @@
 import pool from "../db.js";
 
+//MA-001
 export const getMaterialsByEnvironmentId = async (req, res) => {
   const { idAmbiente } = req.body; // Obtener el idAmbiente de los parámetros del cuerpo de la solicitud
   console.log(idAmbiente);
@@ -34,6 +35,7 @@ export const getMaterialsByEnvironmentId = async (req, res) => {
   }
 };
 
+//MA-002
 export const getMaterialById = async (req, res) => {
   const { id } = req.body; // Obtener el id del material del cuerpo de la solicitud
   console.log(`ID del material: ${id}`);
@@ -70,6 +72,7 @@ export const getMaterialById = async (req, res) => {
   }
 };
 
+//MA-003
 export const updateMaterial = async (req, res) => {
   const { id, nombre, descripcion, to_give, stock } = req.body;
 
@@ -106,7 +109,7 @@ export const updateMaterial = async (req, res) => {
     return res.status(500).send("Error inesperado al actualizar el material.");
   }
 };
-
+//MA-004
 export const createMaterial = async (req, res) => {
   const { nombre, descripcion, stock, to_give, id_ambiente } = req.body;
 

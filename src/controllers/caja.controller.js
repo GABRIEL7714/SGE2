@@ -1,5 +1,5 @@
 import pool from "../db.js";
-
+//C-001
 export const getEventCajaById = async (req, res) => {
   const { id_evento } = req.body; // Recibir el ID del evento
 
@@ -33,6 +33,7 @@ export const getEventCajaById = async (req, res) => {
   }
 };
 
+//C-001
 export const registrarIngresoEgreso = async (req, res) => {
   const { concepto, id_evento, monto, tipo, num_recibo } = req.body;
   const idEvento = BigInt(id_evento); // O usar parseInt si BigInt no es compatible

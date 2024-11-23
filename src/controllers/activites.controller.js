@@ -59,7 +59,7 @@ export const getEventActivitiesById = async (req, res) => {
       .send("Error en el servidor al obtener las actividades.");
   }
 };
-
+//AC-003
 export const getNumberEventActivities = async (req, res) => {
   const { idEvento } = req.body;
   console.log("Si entra al getNumber", idEvento);
@@ -92,6 +92,7 @@ export const getNumberEventActivities = async (req, res) => {
   }
 };
 
+//AC-004
 export const createActivity = async (req, res) => {
   const {
     date,
@@ -144,6 +145,7 @@ export const createActivity = async (req, res) => {
   }
 };
 
+//AC-005
 export const updateActivity = async (req, res) => {
   const {
     idActividad, // ID de la actividad a actualizar
@@ -193,6 +195,7 @@ export const updateActivity = async (req, res) => {
   }
 };
 
+//AC-006
 export const getActivity = async (req, res) => {
   // Obtén el ID del cuerpo de la solicitud
   const { id } = req.body;
