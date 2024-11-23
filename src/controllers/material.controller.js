@@ -106,3 +106,33 @@ export const updateMaterial = async (req, res) => {
     return res.status(500).send("Error inesperado al actualizar el material.");
   }
 };
+
+export const createMaterial = async (req, res) => {
+  const { nombre, descripcion, stock, to_give, id_ambiente } = req.body;
+
+  try {
+    // Llamada a la función en PostgreSQL
+    const { data, error } = await pool.rpc("create_material", {
+      p_nombre: nombre,
+      p_descripcion: descripcion,
+      p_stock: stock,
+      p_to_give: to_give,
+      p_id_ambiente: id_ambiente,
+    });
+
+    if (error) {
+      console.error("Error al crear material:", error);
+      return res.status(500).json({ error: "Error creando el material" });
+    }
+    console.log(data);
+    console.log(error);
+
+    // Responder con los datos del material creado
+    res.json({
+      material: data, // Enviar los datos del material creado
+    });
+  } catch (error) {
+    console.error("Error en el servidor:", error);
+    return res.status(500).json({ error: "Error en el servidor" });
+  }
+};

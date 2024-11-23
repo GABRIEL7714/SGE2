@@ -1,92 +1,86 @@
-document.addEventListener("DOMContentLoaded", function () {
-  // Datos simulados de la "base de datos"
-  const ingresos = [
-    { concepto: "Entradas estudiante", monto: 1100, recibo: "-" },
-    { concepto: "Entradas Profesional", monto: 1000, recibo: "-" },
-    { concepto: "Entradas Colaborador", monto: 650, recibo: "-" },
-  ];
+document.addEventListener("DOMContentLoaded", async function () {
+  const urlParams = new URLSearchParams(window.location.search);
+  const id_evento = urlParams.get("id");
 
-  const egresos = [
-    { concepto: "Movilidad", monto: 15, recibo: "-" },
-    { concepto: "Hospedaje", monto: 40, recibo: "100502420" },
-    { concepto: "Folletos", monto: 25, recibo: "202524021" },
-  ];
+  try {
+    // Obtener datos de la caja del evento
+    const response = await fetch("http://localhost:5000/getEventCajaById", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id_evento }), // Enviar el ID del evento
+    });
 
-  // Función para cargar los datos en la tabla de ingresos
-  function cargarIngresos() {
+    if (!response.ok)
+      throw new Error("Error al obtener datos de la caja del evento");
+
+    const caja = await response.json(); // Convertir respuesta a JSON
+    console.log("Caja del evento:", caja);
+
+    // Referencias a los cuerpos de las tablas
     const ingresosBody = document.getElementById("ingresos-body");
-    let totalIngresos = 0;
-
-    ingresos.forEach((ingreso) => {
-      const row = document.createElement("tr");
-      row.innerHTML = `
-          <td>${ingreso.concepto}</td>
-          <td>${ingreso.monto}</td>
-          <td>${ingreso.recibo}</td>
-        `;
-      ingresosBody.appendChild(row);
-      totalIngresos += ingreso.monto;
-    });
-
-    // Fila del total de ingresos
-    const totalRow = document.createElement("tr");
-    totalRow.innerHTML = `
-        <td><strong>Total</strong></td>
-        <td><strong>${totalIngresos}</strong></td>
-        <td></td>
-      `;
-    ingresosBody.appendChild(totalRow);
-  }
-  // Función para cargar los datos en la tabla de egresos
-  function cargarEgresos() {
     const egresosBody = document.getElementById("egresos-body");
-    let totalEgresos = 0;
 
-    egresos.forEach((egreso) => {
-      const row = document.createElement("tr");
-      row.innerHTML = `
-          <td>${egreso.concepto}</td>
-          <td>${egreso.monto}</td>
-          <td>${egreso.recibo}</td>
-        `;
-      egresosBody.appendChild(row);
-      totalEgresos += egreso.monto;
+    // Limpiar tablas
+    ingresosBody.innerHTML = "";
+    egresosBody.innerHTML = "";
+
+    // Recorrer datos y llenar las tablas
+    caja.forEach((item) => {
+      const row = document.createElement("tr"); // Crear fila
+
+      // Crear columnas
+      const conceptoCell = document.createElement("td");
+      conceptoCell.textContent = item.concepto;
+
+      const montoCell = document.createElement("td");
+      montoCell.textContent = `$${item.monto.toLocaleString()}`;
+
+      const reciboCell = document.createElement("td");
+      reciboCell.textContent = item.id; // Usamos `id` como el número de recibo
+
+      // Agregar columnas a la fila
+      row.appendChild(conceptoCell);
+      row.appendChild(montoCell);
+      row.appendChild(reciboCell);
+
+      // Agregar fila a la tabla correspondiente
+      if (item.tipo === "ingreso") {
+        ingresosBody.appendChild(row);
+      } else if (item.tipo === "egreso") {
+        egresosBody.appendChild(row);
+      }
     });
-
-    // Fila del total de egresos
-    const totalRow = document.createElement("tr");
-    totalRow.innerHTML = `
-        <td><strong>Total</strong></td>
-        <td><strong>${totalEgresos}</strong></td>
-        <td></td>
-      `;
-    egresosBody.appendChild(totalRow);
+  } catch (error) {
+    console.error("Error:", error.message);
+    // Mostrar un mensaje de error en la UI si es necesario
+    const container = document.querySelector(".container");
+    const errorMsg = document.createElement("div");
+    errorMsg.className = "alert alert-danger";
+    errorMsg.textContent = "Error al cargar los datos de la caja del evento.";
+    container.prepend(errorMsg);
   }
-
-  // Llamar a las funciones para cargar los datos
-  cargarIngresos();
-  cargarEgresos();
 });
 
-// script.js
-
+// Manejo de botones para agregar ingresos o egresos
 document.getElementById("btnAgregarGasto").addEventListener("click", () => {
-  // Define los valores de los atributos
-  const id = 0; /*ID*/ // Cambia 'valor1' al valor deseado
-  const ineg = 1; // Cambia 'valor2' al valor deseado
+  const urlParams = new URLSearchParams(window.location.search);
+  const id_evento = urlParams.get("id");
+  const id = id_evento; // Cambia al valor deseado
+  const ineg = 1; // 1 para egreso
 
-  // Redirige a la nueva página con los dos parámetros
   window.location.href = `/IngresoEgreso?id=${encodeURIComponent(
     id
   )}&ineg=${encodeURIComponent(ineg)}`;
 });
 
 document.getElementById("btnAgregarIngreso").addEventListener("click", () => {
-  // Define los valores de los atributos
-  const id = 0; /*ID*/ // Cambia 'valor1' al valor deseado
-  const ineg = 0; // Cambia 'valor2' al valor deseado
+  const urlParams = new URLSearchParams(window.location.search);
+  const id_evento = urlParams.get("id");
+  const id = id_evento; // Cambia al valor deseado
+  const ineg = 0; // 0 para ingreso
 
-  // Redirige a la nueva página con los dos parámetros
   window.location.href = `/IngresoEgreso?id=${encodeURIComponent(
     id
   )}&ineg=${encodeURIComponent(ineg)}`;

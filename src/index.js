@@ -209,3 +209,9 @@ app.get("/EditarMaterial", (req, res) => {
     path.join(__dirname, "..", "Web", "pages", "Admin", "editarMaterial.html")
   );
 });
+
+app.get("/CrearMaterial", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "..", "Web", "pages", "Admin", "crearMaterial.html")
+  );
+});

@@ -46,6 +46,9 @@ function renderMaterialsTable(materials) {
 
 // Cargar datos al cargar la página
 document.addEventListener("DOMContentLoaded", async function () {
+  if (window.location.search.includes("refresh=true")) {
+    location.reload();
+  }
   try {
     const idAmbiente = 41;
     const response = await fetch(
@@ -63,17 +66,29 @@ document.addEventListener("DOMContentLoaded", async function () {
     );
 
     const materials = await response.json();
-    console.log("recivido:");
     console.log(materials);
     renderMaterialsTable(materials);
   } catch (error) {
     console.error("Error al manejar los eventos:", error);
   }
+
+  document.getElementById("cancelarBtn").addEventListener("click", () => {
+    const previousUrl = document.referrer; // Captura la URL de referencia
+    if (previousUrl) {
+      window.location.href = previousUrl; // Regresa a la página anterior
+    } else {
+      console.warn(
+        "No hay referencia previa, redirigiendo a la página de inicio."
+      );
+      window.location.href = "/"; // Opcional, redirige a una página de inicio si no hay referrer
+    }
+  });
 });
 
-//funcionalidad boton crear material
 document.getElementById("create-material-btn").addEventListener("click", () => {
-  alert("Crear nuevo material");
+  const urlParams = new URLSearchParams(window.location.search);
+  const idAmbiente = urlParams.get("id");
+  window.location.href = `/CrearMaterial?id=${idAmbiente}`;
 });
 
 function EditarMaterial(idMaterial) {
