@@ -40,10 +40,15 @@ document.addEventListener("DOMContentLoaded", async function () {
       const reciboCell = document.createElement("td");
       reciboCell.textContent = item.id; // Usamos `id` como el número de recibo
 
+      const fechaCell = document.createElement("td");
+      const fechaRegistro = new Date(item.fecha); // Asegúrate de que `item.fecha` exista
+      fechaCell.textContent = fechaRegistro.toLocaleDateString("es-ES"); // Formatear fecha
+
       // Agregar columnas a la fila
       row.appendChild(conceptoCell);
       row.appendChild(montoCell);
       row.appendChild(reciboCell);
+      row.appendChild(fechaCell); // Agregar la columna de fecha
 
       // Agregar fila a la tabla correspondiente
       if (item.tipo === "ingreso") {
@@ -61,27 +66,4 @@ document.addEventListener("DOMContentLoaded", async function () {
     errorMsg.textContent = "Error al cargar los datos de la caja del evento.";
     container.prepend(errorMsg);
   }
-});
-
-// Manejo de botones para agregar ingresos o egresos
-document.getElementById("btnAgregarGasto").addEventListener("click", () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const id_evento = urlParams.get("id");
-  const id = id_evento; // Cambia al valor deseado
-  const ineg = 1; // 1 para egreso
-
-  window.location.href = `/IngresoEgreso?id=${encodeURIComponent(
-    id
-  )}&ineg=${encodeURIComponent(ineg)}`;
-});
-
-document.getElementById("btnAgregarIngreso").addEventListener("click", () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const id_evento = urlParams.get("id");
-  const id = id_evento; // Cambia al valor deseado
-  const ineg = 0; // 0 para ingreso
-
-  window.location.href = `/IngresoEgreso?id=${encodeURIComponent(
-    id
-  )}&ineg=${encodeURIComponent(ineg)}`;
 });
