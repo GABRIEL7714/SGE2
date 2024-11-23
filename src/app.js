@@ -45,6 +45,7 @@ import logInRoutes from "./routes/logIn.routes.js";
 import eventsRoutes from "./routes/events.routes.js";
 import activitiesRoutes from "./routes/activities.routes.js";
 import attendanceRoutes from "./routes/attendance.routes.js";
+import environmentRoutes from "./routes/environment.routes.js";
 
 app.use(usersRoutes);
 // app.use(inscriptionsRoutes);
@@ -52,5 +53,6 @@ app.use(logInRoutes);
 app.use(eventsRoutes);
 app.use(activitiesRoutes);
 app.use(attendanceRoutes);
+app.use(environmentRoutes);
 
 export default app;
