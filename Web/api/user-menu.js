@@ -162,6 +162,8 @@ function logout() {
   document.cookie = "rol=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
   document.cookie =
     "rolActual=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  document.cookie = "DNI=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
   window.location.href = "/";
   renderUserMenu();
 }

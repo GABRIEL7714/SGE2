@@ -11,6 +11,7 @@ const app = express();
 // Configurar cors y json
 app.use(cors());
 app.use(express.json({ limit: "50mb" }));
+app.use(express.static("public"));
 
 // ********* NUEVO CÓDIGO PARA SERVIR ARCHIVOS ESTÁTICOS Y index.html **********
 
@@ -43,12 +44,11 @@ import usersRoutes from "./routes/users.routes.js";
 import logInRoutes from "./routes/logIn.routes.js";
 import eventsRoutes from "./routes/events.routes.js";
 import activitiesRoutes from "./routes/activities.routes.js";
-import reportsRoutes from "./routes/reports.routes.js";
 
 app.use(usersRoutes);
 // app.use(inscriptionsRoutes);
 app.use(logInRoutes);
 app.use(eventsRoutes);
 app.use(activitiesRoutes);
-app.use(reportsRoutes);
+
 export default app;

@@ -36,25 +36,20 @@
         <table class="table table-bordered" id="ambientesTable">
           <thead>
             <tr>
-              <th>Nombre</th>
               <th>Ubicación</th>
               <th>Capacidad</th>
               <th>Disponible</th>
               <th>Acciones</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="ambientes-table-body" class="text-center">
             <!-- Fila de ejemplo, esta se llenará desde JavaScript -->
           </tbody>
         </table>
 
         <!-- Botón para crear nuevo ambiente -->
         <div class="text-center">
-          <button
-            class="btn btn-success"
-            onclick="window.location.href='/CrearAmbiente';"
-            id="crearAmbienteBtn"
-          >
+          <button id="crearAmbienteBtn" class="btn btn-success">
             Crear nuevo ambiente
           </button>
         </div>

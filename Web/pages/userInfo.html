@@ -14,45 +14,43 @@
     />
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+      }
+      .user-info-section {
+        padding: 50px 0;
+      }
+      .user-info-card {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 15px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+      }
+      .user-info-card h3 {
+        color: #5a5a5a;
+      }
+      .user-info-card p {
+        font-size: 1.1rem;
+        color: #4a4a4a;
+      }
+      .user-info-card .qr-code img {
+        border: 1px solid #ddd;
+        border-radius: 10px;
+      }
+    </style>
   </head>
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-    }
-    .header {
-      background-color: #ccc;
-      padding: 10px;
-    }
-
-    .header .logo {
-      font-size: 1.5em;
-      font-weight: bold;
-    }
-    .user-info-section {
-      padding: 50px 0;
-    }
-    .user-info-card {
-      background-color: #f8f9fa;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      padding: 20px;
-    }
-    .qr-code img {
-      max-width: 100%;
-      height: auto;
-    }
-  </style>
 
   <body class="d-flex flex-column min-vh-100">
     <header id="header"></header>
-
     <main class="flex-grow-1">
       <section class="user-info-section">
         <div class="container">
           <div class="row justify-content-center">
-            <div class="col-md-8">
-              <div class="user-info-card p-4">
+            <div class="col-md-10 col-lg-8">
+              <div class="user-info-card">
                 <h3 class="text-center mb-4">Información del Usuario</h3>
                 <div class="row">
                   <div class="col-md-6">
@@ -76,9 +74,9 @@
                     </p>
                     <div class="qr-code mt-4 text-center">
                       <strong>Código QR:</strong>
-                      <!-- QR generado estáticamente para pruebas -->
                       <img
-                        src="https://www.qr-code-generator.com/wp-content/themes/qr/new_structure/assets/media/images/qr-img-example.png"
+                        id="qr-code"
+                        src="https://via.placeholder.com/150"
                         alt="QR Code"
                       />
                     </div>
@@ -92,48 +90,8 @@
     </main>
 
     <footer id="footer"></footer>
-
-    <script>
-      // Cargar el header y el footer
-      function loadHTML(elementId, filePath) {
-        fetch(filePath)
-          .then((response) => response.text())
-          .then((data) => {
-            document.getElementById(elementId).innerHTML = data;
-          })
-          .catch((error) => {
-            console.error("Error al cargar el archivo", error);
-          });
-      }
-
-      loadHTML("header", "./includes/header.html");
-      loadHTML("footer", "./includes/footer.html");
-
-      // Simulación de datos del usuario
-      const userInfo = {
-        tipoDocumento: "Cédula de Ciudadanía",
-        numeroDocumento: "123456789",
-        nombre: "Juan",
-        apellido: "Pérez",
-        correo: "juan.perez@example.com",
-        telefono: "+57 300 123 4567",
-      };
-
-      // Mostrar información del usuario
-      document.getElementById("tipo-documento").textContent =
-        userInfo.tipoDocumento;
-      document.getElementById("numero-documento").textContent =
-        userInfo.numeroDocumento;
-      document.getElementById("nombre").textContent = userInfo.nombre;
-      document.getElementById("apellido").textContent = userInfo.apellido;
-      document.getElementById("correo").textContent = userInfo.correo;
-      document.getElementById("telefono").textContent = userInfo.telefono;
-    </script>
-
-    <!-- Script para QR Code -->
-    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
-
     <script src="/api/user-menu.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/api/userInfo.js"></script>
   </body>
 </html>

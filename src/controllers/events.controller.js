@@ -2,8 +2,7 @@ import pool from "../db.js";
 
 export const getAllEvents = async (req, res) => {
   try {
-    // Llama a la función RPC
-    const { data, error } = await pool.rpc("get_all_events");
+    const { data, error } = await pool.rpc("obtener_eventos_con_actividades");
     if (error) throw error;
 
     console.log(data);

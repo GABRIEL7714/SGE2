@@ -1,4 +1,4 @@
-import supabase from "../db.js";
+import pool from "../db.js";
 
 // Ruta de inicio de sesión
 
@@ -9,7 +9,7 @@ export const logIn = async (req, res) => {
   try {
     // Llamada al procedimiento almacenado
     console.log("Si entra");
-    const { data, error } = await supabase.rpc("verificar_usuario", {
+    const { data, error } = await pool.rpc("verificar_usuario", {
       correo_param: correo,
       contrasena_param: contraseña,
     });
@@ -22,16 +22,22 @@ export const logIn = async (req, res) => {
     console.log(data);
 
     if (data && data.length > 0) {
-      const rol = data[0].rol_usuario; // Nota: Cambia esto si el alias en el procedimiento es diferente
-
+      const rol = data[0].rol_usuario;
+      const DNI = data[0].numerodoc;
       // Configurar cookies
       res.cookie("rol", rol, {
+        secure: false,
+        sameSite: "Lax",
+        maxAge: 3600000,
+      });
+
+      res.cookie("loggedIn", "true", {
         secure: false, // Cambia a true si usas HTTPS
         sameSite: "Lax",
         maxAge: 3600000, // Tiempo en milisegundos
       });
 
-      res.cookie("loggedIn", "true", {
+      res.cookie("DNI", DNI, {
         secure: false, // Cambia a true si usas HTTPS
         sameSite: "Lax",
         maxAge: 3600000, // Tiempo en milisegundos
