@@ -44,7 +44,8 @@ import usersRoutes from "./routes/users.routes.js";
 import logInRoutes from "./routes/logIn.routes.js";
 import eventsRoutes from "./routes/events.routes.js";
 import activitiesRoutes from "./routes/activities.routes.js";
-import attendanceRoutes from "./routes/attendance.routes.js";
+import reportRoutes from "./routes/reports.routes.js";
+
 import materialRoutes from "./routes/material.routes.js";
 import cajaRoutes from "./routes/caja.routes.js";
 
@@ -54,7 +55,5 @@ app.use(logInRoutes);
 app.use(eventsRoutes);
 app.use(activitiesRoutes);
 app.use(attendanceRoutes);
-app.use(materialRoutes);
-app.use(cajaRoutes);
 
 export default app;

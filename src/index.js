@@ -200,6 +200,12 @@ app.get("/Reportes", (req, res) => {
   );
 });
 
+app.get("/ReporteInscritos", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "..", "Web", "pages", "Admin", "reporteInscritos.html")
+  );
+});
+
 app.get("/UserInfo", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "Web", "pages", "userInfo.html"));
 });

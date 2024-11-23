@@ -26,10 +26,7 @@
           </div>
           <div class="card-body">
             <form id="ambienteForm">
-              <div class="mb-3">
-                <label for="nombre" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="nombre" required />
-              </div>
+              
               <div class="mb-3">
                 <label for="ubicacion" class="form-label">Ubicación</label>
                 <input
@@ -49,14 +46,14 @@
                 />
               </div>
               <div class="mb-3">
-                <label for="detalles" class="form-label">Detalles</label>
-                <textarea
-                  class="form-control"
-                  id="detalles"
-                  rows="3"
-                  required
-                ></textarea>
+                <label for="disponible" class="form-label">Disponible</label>
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  id="disponible"
+                />
               </div>
+              
               <div class="d-flex justify-content-between">
                 <button type="button" class="btn btn-danger" id="cancelarBtn">
                   Cancelar
