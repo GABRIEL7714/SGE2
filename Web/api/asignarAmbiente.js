@@ -1,3 +1,7 @@
+function asignarMateriales(idAmbiente) {
+  window.location.href = `/AsignarMateriales?id=${idAmbiente}`;
+}
+
 function editarAmbiente(idAmbiente) {
   window.location.href = `/EditarAmbiente?id=${idAmbiente}`;
 }

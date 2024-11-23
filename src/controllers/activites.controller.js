@@ -137,7 +137,6 @@ export const updateActivity = async (req, res) => {
   const {
     idActividad, // ID de la actividad a actualizar
     date,
-    id_evento,
     hora_inicio,
     hora_fin,
     expositor,
@@ -145,46 +144,41 @@ export const updateActivity = async (req, res) => {
     nombre,
     descripcion,
   } = req.body;
-  console.log("ID ACTIVIDAD");
-  console.log(idActividad);
+
+  if (!idActividad) {
+    return res
+      .status(400)
+      .json({ error: "El ID de la actividad es obligatorio." });
+  }
+
   try {
-    // Consulta para actualizar los datos en la tabla actividad
-    const query = `
-      UPDATE actividad 
-      SET 
-        date = $1, 
-        hora_inicio = $2, 
-        hora_fin = $3, 
-        expositor = $4, 
-        tipo = $5, 
-        nombre = $6, 
-        descripcion = $7 
-      WHERE id = $8 
-      RETURNING *
-    `;
-    const values = [
-      date,
-      hora_inicio,
-      hora_fin,
-      expositor,
-      tipo,
-      nombre,
-      descripcion,
-      idActividad, // Condición para identificar la actividad a actualizar
-    ];
+    const { data, error } = await pool.rpc("update_actividad_by_id", {
+      id_input: idActividad,
+      date_input: date,
+      hora_inicio_input: hora_inicio,
+      hora_fin_input: hora_fin,
+      expositor_input: expositor,
+      tipo_input: tipo,
+      nombre_input: nombre,
+      descripcion_input: descripcion,
+    });
 
-    // Ejecutar la consulta
-    const result = await pool.query(query, values);
-
-    // Respuesta exitosa con la actividad actualizada
+    if (error) {
+      console.error("Error al actualizar la actividad:", error);
+      return res
+        .status(500)
+        .json({ error: "Error al actualizar la actividad." });
+    }
     res.json({
       message: "Actividad actualizada exitosamente",
-      activity: result.rows[0], // Actividad actualizada
-      redirect: `/ActividadesEvento?id=${id_evento}`, // Redirigir al listado de actividades del evento
+      activity: data[0], // Actividad actualizada
+      redirect: `/ActividadesEvento?id=${data[0].id_evento}`, // Redirigir al listado de actividades del evento
     });
   } catch (error) {
-    console.error("Error al actualizar la actividad:", error);
-    return res.status(500).json({ error: "Error actualizando actividad" });
+    console.error("Error interno:", error);
+    return res
+      .status(500)
+      .json({ error: "Error interno al procesar la solicitud." });
   }
 };
 
@@ -192,18 +186,27 @@ export const getActivity = async (req, res) => {
   // Obtén el ID del cuerpo de la solicitud
   const { id } = req.body;
 
-  try {
-    // Define la consulta SQL y los valores
-    const query = "SELECT * FROM actividad WHERE id = $1;";
-    const values = [id];
+  if (!id) {
+    return res.status(400).json({ error: "El ID es obligatorio." });
+  }
 
-    // Ejecuta la consulta con los valores correctos
-    const result = await pool.query(query, values);
+  try {
+    // Llama al procedimiento almacenado usando rpc
+    const { data, error } = await pool.rpc("get_actividad_by_id", {
+      id_input: id,
+    });
+
+    if (error) {
+      console.error("Error al obtener la actividad:", error);
+      return res.status(500).json({ error: "Error al obtener la actividad." });
+    }
 
     // Devuelve los resultados como respuesta
-    return res.json(result.rows[0] || {});
+    return res.json(data.length > 0 ? data[0] : {});
   } catch (error) {
-    console.error("Error al obtener la actividad:", error);
-    return res.status(500).json({ error: "Error al obtener la actividad." });
+    console.error("Error interno:", error);
+    return res
+      .status(500)
+      .json({ error: "Error interno al procesar la solicitud." });
   }
 };

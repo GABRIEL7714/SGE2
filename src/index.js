@@ -139,9 +139,15 @@ app.get("/IngresoEgreso", (req, res) => {
   );
 });
 
-app.get("/Asistencia", (req, res) => {
+app.get("/AsistenciaEvento", (req, res) => {
   res.sendFile(
     path.join(__dirname, "..", "Web", "pages", "Admin", "asistenciaEvento.html")
+  );
+});
+
+app.get("/Asistencia", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "..", "Web", "pages", "Admin", "asistencia.html")
   );
 });
 

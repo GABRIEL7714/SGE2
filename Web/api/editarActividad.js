@@ -71,7 +71,7 @@ document
         },
         credentials: "include",
         body: JSON.stringify({
-          idActividad, // Incluye el ID de la actividad para actualizar
+          idActividad,
           nombre,
           tipo,
           expositor,
@@ -96,9 +96,7 @@ document
         modalExito.show();
 
         setTimeout(() => {
-          // Agregar una marca en el localStorage para indicar que se debe actualizar la página anterior
-          localStorage.setItem("refreshPreviousPage", "true");
-          window.history.back(); // Regresar a la página anterior
+          window.location.href = reJson.redirect;
         }, 2000);
       }
     } catch (error) {
