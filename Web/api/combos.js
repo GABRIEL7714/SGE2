@@ -64,7 +64,8 @@ document.addEventListener("DOMContentLoaded", function () {
     .getElementById("inscribirButton")
     .addEventListener("click", function () {
       const isAuthenticated = getCookie("loggedIn");
-
+      const urlParams = new URLSearchParams(window.location.search);
+      const idEvento = urlParams.get("idEvento");
       if (!isAuthenticated) {
         // Si el usuario no está autenticado, redirigir a la página de inicio de sesión
         window.location.href = "/pages/logIn.html";
@@ -77,9 +78,9 @@ document.addEventListener("DOMContentLoaded", function () {
         let nextPage =
           today < fechaInscripcion ? "/PreInscripcion" : "/Categorias";
         // Pasar el título del evento y el ID del combo seleccionado en la URL
-        window.location.href = `${nextPage}?title=${encodeURIComponent(
-          eventTitle
-        )}&comboId=${selectedComboId}`;
+        window.location.href = `${nextPage}?comboId=${encodeURIComponent(
+          selectedComboId
+        )}&idEvento=${encodeURIComponent(idEvento)}`;
       }
     });
 });

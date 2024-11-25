@@ -49,9 +49,10 @@ import reportRoutes from "./routes/reports.routes.js";
 import EnviromentRoutes from "./routes/environment.routes.js";
 import materialRoutes from "./routes/material.routes.js";
 import cajaRoutes from "./routes/caja.routes.js";
+import inscriptionsRoutes from "./routes/inscriptions.routes.js";
 
 app.use(usersRoutes);
-// app.use(inscriptionsRoutes);
+app.use(inscriptionsRoutes);
 app.use(logInRoutes);
 app.use(eventsRoutes);
 app.use(activitiesRoutes);

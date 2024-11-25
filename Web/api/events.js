@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", async function () {
           <h4 class="card-title">${event.nombre}</h4>
           <h6 class="card-text">${event.descripcion}</h6>
           <p class="card-text">${event.fechainicio}</p>
-          <button class="btn btn-success" onclick="verCombos('${event.nombre}', '${event.fechaincripcion}')">Ver Combos</button>
+          <button class="btn btn-success" onclick="verCombos('${event.id}', '${event.nombre}', '${event.fechainscripcion}')">Ver Combos</button>
         </div>
       </div>
     `;
@@ -35,9 +35,11 @@ document.addEventListener("DOMContentLoaded", async function () {
 });
 
 // Función para redirigir a la página de combos con la información del evento seleccionado
-function verCombos(eventTitle, fechaInscripcion) {
+function verCombos(idEvento, eventTitle, fechaInscripcion) {
   // Redirigir a combos.html pasando la información del evento como parámetros en la URL
-  window.location.href = `/Combos?title=${encodeURIComponent(
+  window.location.href = `/Combos?idEvento=${encodeURIComponent(
+    idEvento
+  )}&title=${encodeURIComponent(
     eventTitle
   )}&fechaInscripcion=${encodeURIComponent(fechaInscripcion)}`;
 }

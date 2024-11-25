@@ -1,15 +1,10 @@
-// import { Router } from 'express';
+import { Router } from "express";
 
-// //Obtengo las funciones del controlador
-// import {
-//   registerToEvent,
-//   envioBody,
-// } from '../controllers/inscriptions.controller.js';
+import { inscribir } from "../controllers/inscriptions.controller.js";
 
-// const router = Router();
+const router = Router();
 
 // //Defino nombres de las rutas,
-// router.put('/registerToEvent/:userId/:eventId', registerToEvent);
-// router.post('/envioBody', envioBody);
+router.post("/inscribir", inscribir);
 
-// export default router;
+export default router;

@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Obtener los parámetros de la URL (por ejemplo, título del evento o combo seleccionado)
   const urlParams = new URLSearchParams(window.location.search);
   const comboId = urlParams.get("comboId");
-  const eventTitle = urlParams.get("title");
+  const idEvento = urlParams.get("idEvento");
 
   // Definir categorías
   const categories = [
@@ -62,8 +62,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Redirigir a la página de pago con los parámetros (categoría seleccionada, comboId, etc.)
-    window.location.href = `/Payment?categoryId=${selectedCategoryId}&comboId=${comboId}&title=${encodeURIComponent(
-      eventTitle
+    window.location.href = `/Payment?categoryId=${encodeURIComponent(
+      selectedCategoryId
+    )}&comboId=${encodeURIComponent(comboId)}&idEvento=${encodeURIComponent(
+      idEvento
     )}`;
   });
 });
