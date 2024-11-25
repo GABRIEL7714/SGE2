@@ -40,12 +40,11 @@ app.use(function (req, res, next) {
 
 // Rutas de la API
 import usersRoutes from "./routes/users.routes.js";
-// import inscriptionsRoutes from './routes/inscriptions.routes.js';
 import logInRoutes from "./routes/logIn.routes.js";
 import eventsRoutes from "./routes/events.routes.js";
 import activitiesRoutes from "./routes/activities.routes.js";
 import reportRoutes from "./routes/reports.routes.js";
-
+import EnviromentRoutes from "./routes/environment.routes.js";
 
 app.use(usersRoutes);
 // app.use(inscriptionsRoutes);
@@ -53,5 +52,6 @@ app.use(logInRoutes);
 app.use(eventsRoutes);
 app.use(activitiesRoutes);
 app.use(reportRoutes);
+app.use(EnviromentRoutes);
 
 export default app;

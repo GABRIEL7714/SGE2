@@ -21,10 +21,7 @@ async function cargarActividad(id) {
       body: JSON.stringify({ id }), // Incluye el id en el cuerpo de la solicitud
     });
 
-    console.log("Respuesta recibida");
-
     if (response.ok) {
-      console.log("Respuesta exitosa");
       const actividad = await response.json();
 
       // Rellena los campos del formulario con los datos de la actividad
