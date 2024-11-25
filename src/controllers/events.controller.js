@@ -1,5 +1,6 @@
 import pool from "../db.js";
 
+//Ev-001
 export const getAllEvents = async (req, res) => {
   try {
     const { data, error } = await pool.rpc("obtener_eventos_con_actividades");
@@ -13,13 +14,12 @@ export const getAllEvents = async (req, res) => {
   }
 };
 
-//EC-002
+//Ev-002
 export const getEvent = async (req, res) => {
   // Obtén el ID del cuerpo de la solicitud
   const { id } = req.body;
 
   try {
-    // Llama a la función creada en PostgreSQL usando supabase.rpc()
     const { data, error } = await pool.rpc("get_event_by_id", { p_id: id });
     console.log(data);
     if (error) {
@@ -35,7 +35,7 @@ export const getEvent = async (req, res) => {
   }
 };
 
-//EC-003
+//Ev-003
 export const createEvent = async (req, res) => {
   let {
     nombre,
@@ -75,7 +75,7 @@ export const createEvent = async (req, res) => {
   }
 };
 
-//EC-004
+//Ev-004
 export const updateEvent = async (req, res) => {
   let {
     idEvento,

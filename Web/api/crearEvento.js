@@ -30,18 +30,21 @@ async function cargarEvento(id) {
       const evento = await response.json();
 
       // Rellena los campos del formulario con los datos del evento
-      document.getElementById("nombre").value = evento.nombre || "";
-      document.getElementById("tipo").value = evento.tipo || "";
-      document.getElementById("descripcion").value = evento.descripcion || "";
-      document.getElementById("inicio").value = evento.fechainicio
-        ? evento.fechainicio.split("T")[0]
+      document.getElementById("nombre").value = evento[0].nombre || "";
+      document.getElementById("tipo").value = evento[0].tipo || "";
+      document.getElementById("descripcion").value =
+        evento[0].descripcion || "";
+      document.getElementById("inicio").value = evento[0].fechainicio
+        ? evento[0].fechainicio.split("T")[0]
         : "";
-      document.getElementById("fin").value = evento.fechafin
-        ? evento.fechafin.split("T")[0]
+      document.getElementById("fin").value = evento[0].fechafin
+        ? evento[0].fechafin.split("T")[0]
         : "";
-      document.getElementById("fechainscripcion").value =
-        evento.fechainscripcion ? evento.fechainscripcion.split("T")[0] : "";
-      document.getElementById("publico").value = evento.publica
+      document.getElementById("fechainscripcion").value = evento[0]
+        .fechainscripcion
+        ? evento[0].fechainscripcion.split("T")[0]
+        : "";
+      document.getElementById("publico").value = evento[0].publica
         ? "publico"
         : "privado";
 
