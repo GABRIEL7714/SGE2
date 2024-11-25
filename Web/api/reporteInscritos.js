@@ -1,3 +1,7 @@
+//import { jsPDF } from "jspdf";
+
+let eventoSeleccionado = null;
+
 async function filtrarDatos() {
   const tipo = document.querySelector("#tipo").value;
   const fecha = document.querySelector("#fecha").value;
@@ -38,12 +42,19 @@ async function filtrarDatos() {
             <td>${evento.tipo}</td>
             <td>${evento.fechainicio}</td>
             <td>${evento.fechafin}</td>
-            <td><button class="btn-seleccionar" onclick="seleccionarEvento(${encodeURIComponent(
-              JSON.stringify(evento)
-            )})">Seleccionar</button></td>
+            <td>
+            <button class="btn-seleccionar">Seleccionar</button>
+          </td>
           `;
         tableBody.appendChild(row);
       }
+      const botonesSeleccionar = document.querySelectorAll(".btn-seleccionar");
+      botonesSeleccionar.forEach((button, index) => {
+        // Asignar el evento de clic para cada botón
+        button.onclick = function () {
+          seleccionarEvento(eventos[index]); // Pasamos el evento correspondiente
+        };
+      });
     }
   } catch (error) {
     console.error("Error al obtener los eventos:", error);
@@ -52,34 +63,70 @@ async function filtrarDatos() {
 }
 
 function seleccionarEvento(evento) {
-  // Decodifica el objeto evento seleccionado
-  eventoSeleccionado = JSON.parse(decodeURIComponent(evento));
-  console.log("Evento seleccionado:", eventoSeleccionado);
+  // Mostrar detalles del evento
 
-  // Habilitar el botón de exportar PDF
-  document.getElementById("exportar-pdf").disabled = false;
+  // Guardar el evento seleccionado en la variable global
+  eventoSeleccionado = evento;
+
+  // Obtener el botón de exportar PDF por su ID
+  const exportarPdfButton = document.getElementById("exportar-pdf");
+
+  if (exportarPdfButton) {
+    // Habilitar el botón de exportar PDF
+    exportarPdfButton.disabled = false;
+    console.log("Botón habilitado: " + !exportarPdfButton.disabled); // Verifica si el botón está habilitado
+  } else {
+    console.error("No se encontró el botón de exportar PDF.");
+  }
 }
 
-async function exportarPDF() {
-  if (!eventoSeleccionado) {
-    alert("No se ha seleccionado ningún evento.");
-    return;
+async function exportarPDF(eventoSeleccionadoId) {
+  try {
+    // Hacer la solicitud a la API con el id del evento seleccionado
+    const response = await fetch(`http://localhost:5000/getUsersPerEvent`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ idEvento: eventoSeleccionado.id }),
+    });
+
+    // Verificar si la respuesta es exitosa
+    if (!response.ok) {
+      throw new Error("Error al obtener los usuarios para el evento");
+    }
+
+    // Parsear la respuesta JSON
+    const data = await response.json();
+
+    // Verificar si la respuesta contiene el array de usuarios
+    if (!data.usuarios || data.usuarios.length === 0) {
+      console.log("No hay usuarios registrados para este evento.");
+      return; // Salimos de la función si no hay usuarios
+    }
+
+    // Si hay usuarios, puedes proceder a generar el PDF
+    console.log("Usuarios obtenidos:", data.usuarios);
+
+    // Lógica para generar el PDF con los usuarios obtenidos
+    /*const { jsPDF } = await import(
+      "https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"
+    );*/
+    const { jsPDF } = window.jspdf;
+
+    const doc = new jsPDF(); // Usar jsPDF.jsPDF() como constructor
+    doc.text("Lista de usuarios registrados", 10, 10);
+
+    // Agregar los usuarios al PDF
+    data.usuarios.forEach((usuario, index) => {
+      doc.text(`${index + 1}. Usuario ID: ${usuario}`, 10, 20 + index * 10);
+    });
+
+    // Guardar o mostrar el PDF
+    doc.save(`usuarios_evento_${eventoSeleccionadoId}.pdf`);
+  } catch (error) {
+    console.error("Error al exportar el PDF:", error);
   }
-
-  const { jsPDF } = window.jspdf; // Asegúrate de tener jsPDF cargado
-  const doc = new jsPDF();
-
-  // Título del reporte
-  doc.text("Detalle del Evento Seleccionado", 10, 10);
-
-  // Agregar información del evento
-  doc.text(`Nombre: ${eventoSeleccionado.nombre}`, 10, 20);
-  doc.text(`Tipo: ${eventoSeleccionado.tipo}`, 10, 30);
-  doc.text(`Inicio: ${eventoSeleccionado.fechainicio}`, 10, 40);
-  doc.text(`Fin: ${eventoSeleccionado.fechafin}`, 10, 50);
-
-  // Descargar el archivo
-  doc.save(`evento-${eventoSeleccionado.nombre}.pdf`);
 }
 
 document.querySelector("#filtrar").onclick = filtrarDatos;
