@@ -1,57 +1,101 @@
-// Simulación de datos que obtendrías del backend
-const ambienteData = {
-  nombre: "N201",
-  ubicacion: "Sede Sucre",
-  capacidad: 50,
-  detalles: "Salón grande con proyector.",
-};
+document.addEventListener("DOMContentLoaded", async function () {
+  const urlParams = new URLSearchParams(window.location.search);
+  const idAmbiente = urlParams.get("id");
+
+  if (idAmbiente) {
+    console.log("Si hay ID de Ambiente en la URL");
+    await cargarAmbiente(idAmbiente);
+  } else {
+    console.log("No hay ID de Ambiente en la URL");
+  }
+});
 
 // Función que carga los datos en los campos del formulario
-function cargarDatos() {
-  // Obtener los elementos del formulario
-  const nombre = document.getElementById("nombre");
-  const ubicacion = document.getElementById("ubicacion");
-  const capacidad = document.getElementById("capacidad");
-  const detalles = document.getElementById("detalles");
+async function cargarAmbiente(id) {
+  try {
+    console.log("Iniciando solicitud para cargar ambiente");
+    const response = await fetch("http://localhost:5000/getAmbienteById", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id }), // Incluye el id en el cuerpo de la solicitud
+    });
+    console.log("Respuesta: ");
+    console.log(response);
+    if (response.ok) {
+      const ambiente = await response.json();
 
-  // Asignar los valores del objeto a los campos
-  nombre.value = ambienteData.nombre;
-  ubicacion.value = ambienteData.ubicacion;
-  capacidad.value = ambienteData.capacidad;
-  detalles.value = ambienteData.detalles;
+      // Rellena los campos del formulario con los datos del ambiente
+      document.getElementById("ubicacion").value = ambiente.locacion || "";
+      document.getElementById("capacidad").value = ambiente.capacidad || "";
+
+      // Configura la disponibilidad según el valor booleano
+      document.getElementById("disponibilidad").value = ambiente.disponible
+        ? "disponible"
+        : "no_disponible";
+
+      console.log("Campos del formulario completados con éxito");
+    } else {
+      console.error("Error al obtener los detalles del ambiente");
+    }
+  } catch (error) {
+    console.error("Error en la solicitud:", error);
+  }
 }
 
-// Ejecutar la función cuando se cargue la página
-window.onload = function () {
-  cargarDatos();
-};
-
-// Evento para el botón de guardar (enviar el formulario)
 document
-  .getElementById("guardarBtn")
-  .addEventListener("click", function (event) {
-    event.preventDefault(); // Prevenir el envío del formulario por defecto
+  .getElementById("editarAmbienteForm")
+  .addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-    // Obtener los valores de los campos del formulario
-    const nombre = document.getElementById("nombre").value;
+    const urlParams = new URLSearchParams(window.location.search);
+    const idAmbiente = urlParams.get("id");
+
     const ubicacion = document.getElementById("ubicacion").value;
-    const capacidad = document.getElementById("capacidad").value;
-    const detalles = document.getElementById("detalles").value;
+    const capacidad = parseInt(document.getElementById("capacidad").value, 10);
+    const disponible =
+      document.getElementById("disponibilidad").value === "disponible";
 
-    // Aquí iría el código para enviar los datos al backend
-    console.log("Datos enviados:", { nombre, ubicacion, capacidad, detalles });
+    try {
+      // Realiza la solicitud para actualizar el ambiente
+      const res = await fetch("http://localhost:5000/updateAmbiente", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          idAmbiente,
+          ubicacion,
+          capacidad,
+          disponible,
+        }),
+      });
 
-    // Puedes usar una función AJAX o Fetch para enviar estos datos al servidor
-    // fetch('/editar-ambiente', {
-    //   method: 'POST',
-    //   body: JSON.stringify({ nombre, ubicacion, capacidad, detalles }),
-    //   headers: { 'Content-Type': 'application/json' }
-    // }).then(response => response.json())
-    //   .then(data => console.log(data));
+      if (!res.ok) {
+        alert("Error al guardar el ambiente.");
+        return;
+      }
+
+      const reJson = await res.json();
+
+      // Si hay una redirección, muestra un modal de éxito y redirige
+      if (reJson.redirect) {
+        const modalExito = new bootstrap.Modal(
+          document.getElementById("modalExito")
+        );
+        modalExito.show();
+
+        setTimeout(() => {
+          window.location.href = reJson.redirect;
+        }, 2000);
+      }
+    } catch (error) {
+      console.error("Error en la solicitud: ", error);
+    }
   });
 
-// Evento para el botón de cancelar (resetear el formulario o redirigir)
 document.getElementById("cancelarBtn").addEventListener("click", function () {
-  // Aquí puedes agregar lógica para cancelar o resetear el formulario
   window.location.href = "/AsignarAmbiente"; // Ejemplo de redirección a otra página
 });

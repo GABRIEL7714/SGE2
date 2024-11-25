@@ -181,7 +181,7 @@ app.get("/EditarAmbiente", (req, res) => {
   );
 });
 
-app.get("/AsignarMateriales", (req, res) => {
+app.get("/MaterialesAmbiente", (req, res) => {
   res.sendFile(
     path.join(
       __dirname,
@@ -189,7 +189,7 @@ app.get("/AsignarMateriales", (req, res) => {
       "Web",
       "pages",
       "Admin",
-      "asignarMateriales.html"
+      "materialesAmbiente.html"
     )
   );
 });
@@ -208,4 +208,16 @@ app.get("/ReporteInscritos", (req, res) => {
 
 app.get("/UserInfo", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "Web", "pages", "userInfo.html"));
+});
+
+app.get("/EditarMaterial", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "..", "Web", "pages", "Admin", "editarMaterial.html")
+  );
+});
+
+app.get("/CrearMaterial", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "..", "Web", "pages", "Admin", "crearMaterial.html")
+  );
 });

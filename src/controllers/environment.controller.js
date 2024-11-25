@@ -3,7 +3,7 @@ import pool from "../db.js";
 // AMB-001: Obtener todos los ambientes
 export const getAllAmbientes = async (req, res) => {
   try {
-    console.log("entro");
+    console.log("entroOOOOOOOOOOOOOOOOOOO");
     const { data, error } = await pool.rpc("get_all_ambientes");
 
     if (error) {
@@ -28,22 +28,29 @@ export const getAllAmbientes = async (req, res) => {
 
 // AMB-002: Obtener un ambiente por su ID
 export const getAmbienteById = async (req, res) => {
-  const { id } = req.body; // Obtener el ID del ambiente de la solicitud
+  // Obtén el ID del cuerpo de la solicitud
+  const { id } = req.body;
 
   if (!id) {
-    return res.status(400).json({ error: "El ID del ambiente es obligatorio." });
+    return res.status(400).json({ error: "El ID es obligatorio." });
   }
 
   try {
+    // Llama al procedimiento almacenado usando rpc
     const { data, error } = await pool.rpc("get_ambiente_by_id", {
       id_input: id,
     });
+    console.log("Respuesta: ");
+    console.log(data);
+    console.log("Error: ");
+    console.log(error);
 
     if (error) {
       console.error("Error al obtener el ambiente:", error);
       return res.status(500).json({ error: "Error al obtener el ambiente." });
     }
 
+    // Devuelve los resultados como respuesta
     return res.json(data.length > 0 ? data[0] : {});
   } catch (error) {
     console.error("Error interno:", error);
@@ -58,9 +65,10 @@ export const createAmbiente = async (req, res) => {
   const { ubicacion, capacidad, disponible } = req.body;
 
   if (!ubicacion || capacidad === undefined || disponible === undefined) {
-    return res
-      .status(400)
-      .json({ error: "Todos los campos (ubicacion, capacidad, disponible) son obligatorios." });
+    return res.status(400).json({
+      error:
+        "Todos los campos (ubicacion, capacidad, disponible) son obligatorios.",
+    });
   }
 
   try {
@@ -89,15 +97,17 @@ export const createAmbiente = async (req, res) => {
 };
 // AMB-004: Actualizar un ambiente existente
 export const updateAmbiente = async (req, res) => {
-  const { id,ubicacion, capacidad, disponible } = req.body;
+  const { idAmbiente, ubicacion, capacidad, disponible } = req.body;
 
-  if (!id) {
-    return res.status(400).json({ error: "El ID del ambiente es obligatorio." });
+  if (!idAmbiente) {
+    return res
+      .status(400)
+      .json({ error: "El ID del ambiente es obligatorio." });
   }
 
   try {
     const { data, error } = await pool.rpc("update_ambiente_by_id", {
-      id_input: id,
+      id_input: idAmbiente,
       ubicacion_input: ubicacion,
       capacidad_input: capacidad,
       disponible_input: disponible,
@@ -112,7 +122,8 @@ export const updateAmbiente = async (req, res) => {
 
     res.json({
       message: "Ambiente actualizado exitosamente.",
-      ambiente: data[0], // Ambiente actualizado
+      ambiente: data[0],
+      redirect: "/AsignarAmbiente",
     });
   } catch (error) {
     console.error("Error interno:", error);
@@ -127,7 +138,9 @@ export const deleteAmbiente = async (req, res) => {
   const { id } = req.body;
 
   if (!id) {
-    return res.status(400).json({ error: "El ID del ambiente es obligatorio." });
+    return res
+      .status(400)
+      .json({ error: "El ID del ambiente es obligatorio." });
   }
 
   try {
@@ -137,9 +150,7 @@ export const deleteAmbiente = async (req, res) => {
 
     if (error) {
       console.error("Error al eliminar el ambiente:", error);
-      return res
-        .status(500)
-        .json({ error: "Error al eliminar el ambiente." });
+      return res.status(500).json({ error: "Error al eliminar el ambiente." });
     }
 
     res.json({

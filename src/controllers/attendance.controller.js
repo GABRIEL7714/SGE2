@@ -1,5 +1,5 @@
 import pool from "../db.js";
-
+//AT-001
 export const registrarAsistencia = async (req, res) => {
   // Obtén los valores del cuerpo de la solicitud
   const { numerodoc, idEvento } = req.body;
