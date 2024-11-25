@@ -163,3 +163,36 @@ export const deleteAmbiente = async (req, res) => {
       .json({ error: "Error interno al procesar la solicitud." });
   }
 };
+
+export const asignarAmbiente = async (req, res) => {
+  const { idActividad, idAmbiente } = req.body;
+
+  if (!idActividad || !idAmbiente) {
+    return res
+      .status(400)
+      .json({ error: "ID de actividad y ambiente son requeridos." });
+  }
+
+  try {
+    // Llamar al procedimiento almacenado para asignar el ambiente
+    const { data, error } = await pool.rpc("asignar_ambiente", {
+      actividad_id: idActividad,
+      ambiente_id: idAmbiente,
+    });
+
+    if (error) {
+      console.error("Error asignando el ambiente:", error);
+      return res.status(500).json({ error: "Error al asignar el ambiente." });
+    }
+
+    res.json({
+      message: "Ambiente asignado correctamente.",
+      data,
+    });
+  } catch (error) {
+    console.error("Error interno:", error);
+    return res
+      .status(500)
+      .json({ error: "Error interno al procesar la solicitud." });
+  }
+};

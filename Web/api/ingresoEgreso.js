@@ -54,7 +54,14 @@ document.addEventListener("DOMContentLoaded", function () {
         alert(result.message || "Ingreso/Egreso registrado correctamente.");
 
         // Opcional: Redirigir a la página anterior o a una vista de confirmación
-        window.history.back();
+        const previousUrl = document.referrer;
+
+        if (previousUrl) {
+          // Redirige a la página anterior y recarga
+          window.location.href = `${previousUrl}`;
+        } else {
+          alert("No se pudo obtener la URL anterior");
+        }
       } catch (error) {
         console.error("Error:", error.message);
         alert("Hubo un error al registrar el ingreso/egreso.");

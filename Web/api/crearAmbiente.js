@@ -5,30 +5,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Evento para el botón "Cancelar"
   cancelarBtn.addEventListener("click", function () {
-    formulario.reset(); // Resetea el formulario
-    window.location.href = `/AsignarAmbiente`; // Redirecciona
+    const previousUrl = document.referrer; // Captura la URL de referencia
+    if (previousUrl) {
+      window.location.href = previousUrl; // Regresa a la página anterior
+    } else {
+      console.warn(
+        "No hay referencia previa, redirigiendo a la página de inicio."
+      );
+      window.location.href = "/"; // Opcional, redirige a una página de inicio si no hay referrer
+    }
   });
 
-  // Evento para el botón "Adaptar Ambiente"
-  adaptarBtn.addEventListener("click", function () {
-    // Aquí puedes agregar lógica específica para adaptar un ambiente
-    alert("Adaptando ambiente...");
-  });
-
-  // Evento para el botón "Guardar"
   formulario.addEventListener("submit", async function (event) {
     event.preventDefault(); // Prevenir el envío por defecto del formulario
 
-    // Obtener los valores de los campos del formulario
-  
     const ubicacion = document.getElementById("ubicacion").value.trim();
     const capacidad = parseInt(document.getElementById("capacidad").value, 10);
     const disponible = document.getElementById("disponible").checked; // true o false
 
-
-
     // Validar los campos
-    if ( ubicacion && capacidad && disponible) {
+    if (ubicacion && capacidad && disponible) {
       try {
         // Hacer una solicitud POST al endpoint para guardar el ambiente
         const response = await fetch("http://localhost:5000/createAmbiente", {

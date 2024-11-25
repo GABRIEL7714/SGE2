@@ -1,22 +1,3 @@
-function fetchMaterialsFromDatabase() {
-  return [
-    {
-      name: "Almuerzo",
-      description: "Pollo",
-      quantity: "-",
-      deliverable: "Sí",
-    },
-    {
-      name: "Lapiceros",
-      description: "Artesco azul",
-      quantity: "-",
-      deliverable: "Sí",
-    },
-    { name: "Micrófono", description: "-", quantity: 3, deliverable: "No" },
-    { name: "Laptops", description: "-", quantity: 30, deliverable: "Sí" },
-  ];
-}
-
 // Función para renderizar los datos en la tabla
 function renderMaterialsTable(materials) {
   const tableBody = document.getElementById("materials-table-body");
@@ -50,7 +31,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     location.reload();
   }
   try {
-    const idAmbiente = 41;
+    const urlParams = new URLSearchParams(window.location.search);
+    const idAmbiente = urlParams.get("id");
     const response = await fetch(
       "http://localhost:5000/getMaterialsByEnvironmentId",
       {

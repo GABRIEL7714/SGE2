@@ -67,3 +67,27 @@ document.addEventListener("DOMContentLoaded", async function () {
     container.prepend(errorMsg);
   }
 });
+
+// Obtén el ID de la URL actual
+const urlParams = new URLSearchParams(window.location.search);
+const id = urlParams.get("id");
+
+// Redirigir al hacer clic en "Agregar Ingreso"
+document.getElementById("btnAgregarIngreso").addEventListener("click", () => {
+  if (id) {
+    const ineg = 0;
+    window.location.href = `/IngresoEgreso?id=${id}&ineg=${ineg}`;
+  } else {
+    alert("ID no encontrado en la URL");
+  }
+});
+
+// Redirigir al hacer clic en "Agregar Gasto"
+document.getElementById("btnAgregarGasto").addEventListener("click", () => {
+  if (id) {
+    const ineg = 1;
+    window.location.href = `/IngresoEgreso?id=${id}&ineg=${ineg}`;
+  } else {
+    alert("ID no encontrado en la URL");
+  }
+});

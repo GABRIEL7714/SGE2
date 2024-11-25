@@ -7,6 +7,7 @@ import {
   createAmbiente,
   updateAmbiente,
   deleteAmbiente,
+  asignarAmbiente,
 } from "../controllers/environment.controller.js";
 
 const router = Router();
@@ -17,5 +18,6 @@ router.post("/getAmbienteById", getAmbienteById);
 router.post("/createAmbiente", createAmbiente);
 router.post("/updateAmbiente", updateAmbiente);
 router.post("/deleteAmbiente", deleteAmbiente);
+router.post("/asignarAmbiente", asignarAmbiente);
 
 export default router;

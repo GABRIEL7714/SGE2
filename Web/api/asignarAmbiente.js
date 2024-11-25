@@ -6,8 +6,7 @@ function editarAmbiente(idAmbiente) {
   window.location.href = `/EditarAmbiente?id=${idAmbiente}`;
 }
 
-async function crearAmbiente() {
-  // Redirige a la página para crear un ambiente
+function crearAmbiente() {
   window.location.href = "/CrearAmbiente";
 }
 
@@ -52,7 +51,9 @@ document.addEventListener("DOMContentLoaded", async function () {
             <button class="btn btn-secondary btn-sm mx-2" onclick="asignarMateriales('${
               ambiente.id
             }')">Asignar materiales</button>
-            <button class="btn btn-info btn-sm mx-2">Seleccionar</button>
+<button class="btn btn-info btn-sm mx-2" onclick="seleccionarAmbiente('${
+        ambiente.id
+      }')">Seleccionar</button>
           </div>
         </td>
       `;
@@ -73,3 +74,61 @@ document.addEventListener("DOMContentLoaded", async function () {
     .getElementById("crearAmbienteBtn")
     .addEventListener("click", crearAmbiente);
 });
+
+function seleccionarAmbiente(idAmbiente) {
+  // Obtener el id de la actividad desde los parámetros de la URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const idActividad = urlParams.get("id");
+
+  if (!idActividad) {
+    alert("No se encontró el ID de la actividad en la URL.");
+    return;
+  }
+
+  // Buscar la fila del ambiente seleccionado para verificar disponibilidad
+  const row = document
+    .querySelector(`button[onclick="seleccionarAmbiente('${idAmbiente}')"]`)
+    .closest("tr");
+  const disponibilidad = row.querySelector(
+    ".text-success, .text-danger"
+  ).innerText;
+
+  if (disponibilidad === "No Disponible") {
+    alert("No se puede seleccionar un ambiente que no está disponible.");
+    return;
+  }
+
+  // Realizar la solicitud POST
+  fetch("http://localhost:5000/asignarAmbiente", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      idActividad,
+      idAmbiente,
+    }),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Error al asignar el ambiente");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      alert("Ambiente asignado exitosamente.");
+      const previousUrl = document.referrer; // Captura la URL de referencia
+      if (previousUrl) {
+        window.location.href = previousUrl; // Regresa a la página anterior
+      } else {
+        console.warn(
+          "No hay referencia previa, redirigiendo a la página de inicio."
+        );
+        window.location.href = "/"; // Opcional, redirige a una página de inicio si no hay referrer
+      }
+    })
+    .catch((error) => {
+      console.error("Error en la solicitud:", error);
+      alert("Hubo un error al asignar el ambiente.");
+    });
+}
